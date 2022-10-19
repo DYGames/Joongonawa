@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import org.json.JSONObject
+import java.io.File
 import kotlin.reflect.typeOf
 
 class ProductViewModel(private val productRepository: ProductRepository) : ViewModel() {
@@ -45,7 +46,7 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
         }
     }
 
-    fun uploadProduct(data: ProductData) {
+    fun uploadProduct(img: File, data: ProductData) {
         productRepository.makeProductUploadRequest(data)
     }
 }
