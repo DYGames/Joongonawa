@@ -11,7 +11,7 @@ class CategoryActivity : AppCompatActivity() {
     // 매번 null 체크를 할 필요 없이 편의성을 위해 바인딩 변수 재 선언
     private val binding get() = mBinding!!
 
-    lateinit var categoryAdapter: CategoryAdapter
+        lateinit var categoryAdapter: CategoryAdapter
     val datas = mutableListOf<CategoryItemData>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
