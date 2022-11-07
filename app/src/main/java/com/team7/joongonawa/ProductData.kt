@@ -1,12 +1,12 @@
 package com.team7.joongonawa
 
 data class ProductData(
-    val id: Int,
-    val pic: String,
-    val name: String,
-    val descr: String,
-    val price: Int,
-    val category: Int,
-    val type: Int,
-    val condi: String
+    var id: Int,
+    var pic: String,
+    var name: String,
+    var descr: String,
+    var price: Int,
+    var category: Int,
+    var type: Int,
+    var condi: String
 )

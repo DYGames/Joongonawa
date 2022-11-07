@@ -2,10 +2,7 @@ package com.team7.joongonawa
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.team7.joongonawa.databinding.ActivityMainBinding
-import okhttp3.*
-import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
     var _binding: ActivityMainBinding? = null

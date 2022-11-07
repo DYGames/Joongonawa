@@ -1,17 +1,23 @@
 package com.team7.joongonawa
 
-import android.app.Activity
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import com.team7.joongonawa.databinding.FragmentPostProductBinding
 import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import java.lang.String
+import java.util.*
+import kotlin.ByteArray
+import kotlin.Int
+import kotlin.also
+
 
 class PostProductFragment : Fragment() {
     private var _binding: FragmentPostProductBinding? = null
@@ -20,19 +26,9 @@ class PostProductFragment : Fragment() {
     var currentImage: Uri? = null
 
     private val imageResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                if (result.data != null) {
-                    result?.data?.data.let {
-                        requireActivity().contentResolver.takePersistableUriPermission(
-                            result!!.data!!.data!!,
-                            Intent.FLAG_GRANT_READ_URI_PERMISSION
-                        )
-                    }
-                    binding.postProductImage.setImageURI(result!!.data!!.data!!)
-                    currentImage = result!!.data!!.data!!
-                }
-            }
+        registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
+            binding.postProductImage.setImageURI(result)
+            currentImage = result
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,18 +43,34 @@ class PostProductFragment : Fragment() {
         pvm.getProductList(1)
 
         binding.postProductImage.setOnClickListener {
-            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-            intent.type = "image/*"
-            val mimeTypes = arrayOf("image/jpeg", "image/png")
-            intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes)
-            imageResult.launch(intent)
+            imageResult.launch("image/Pictures/*")
         }
 
         binding.postProductTitlePostButton.setOnClickListener {
+            val inputStream = context?.contentResolver?.openInputStream(currentImage!!)
+            Log.d("DYDY", inputStream.toString())
             pvm.uploadProduct(
-                File(currentImage!!.path),
+                convertInputStreamToFile(inputStream),
                 ProductData(0, "", "dygames", "asdfsadfadsfadsf", 0, 0, 1, "A")
             )
+            inputStream?.close()
+        }
+    }
+
+    private fun convertInputStreamToFile(ips: InputStream?): File {
+        val tempFile = File.createTempFile(String.valueOf(ips.hashCode()), ".tmp")
+        tempFile.deleteOnExit()
+        copyInputStreamToFile(ips!!, tempFile)
+        return tempFile
+    }
+
+    private fun copyInputStreamToFile(inputStream: InputStream, file: File) {
+        FileOutputStream(file).use { outputStream ->
+            var read: Int
+            val bytes = ByteArray(1024)
+            while (inputStream.read(bytes).also { read = it } != -1) {
+                outputStream.write(bytes, 0, read)
+            }
         }
     }
 

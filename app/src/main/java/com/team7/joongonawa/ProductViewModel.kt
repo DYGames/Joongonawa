@@ -47,6 +47,7 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
     }
 
     fun uploadProduct(img: File, data: ProductData) {
+        data.pic = productRepository.makeImageUploadRequest(img)
         productRepository.makeProductUploadRequest(data)
     }
 }
