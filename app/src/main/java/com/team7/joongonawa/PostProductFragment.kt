@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.team7.joongonawa.databinding.FragmentPostProductBinding
@@ -35,12 +36,13 @@ class PostProductFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         _binding = FragmentPostProductBinding.inflate(layoutInflater)
-        val pvm = ProductViewModel(ProductRepository.instance)
-        pvm.productList.observe(this) { newList ->
-            //binding.test.text =
-            //"${newList[0].id}, ${newList[0].pic}, ${newList[0].name}, ${newList[0].descr}, ${newList[0].price}, ${newList[0].category}, ${newList[0].type}, ${newList[0].condi}"
+
+        val viewModel = ProductViewModel(ProductRepository.instance)
+        viewModel.getCategoryList()
+
+        viewModel.categoryList.observe(this) { newList ->
+            binding.postProductCategoryEdit.adapter = ArrayAdapter(requireContext(), com.google.android.material.R.layout.support_simple_spinner_dropdown_item, newList.map { it.name })
         }
-        pvm.getProductList(1)
 
         binding.postProductImage.setOnClickListener {
             imageResult.launch("image/Pictures/*")
@@ -48,29 +50,20 @@ class PostProductFragment : Fragment() {
 
         binding.postProductTitlePostButton.setOnClickListener {
             val inputStream = context?.contentResolver?.openInputStream(currentImage!!)
-            Log.d("DYDY", inputStream.toString())
-            pvm.uploadProduct(
-                convertInputStreamToFile(inputStream),
-                ProductData(0, "", "dygames", "asdfsadfadsfadsf", 0, 0, 1, "A")
+            viewModel.uploadProduct(
+                Utils.convertInputStreamToFile(inputStream),
+                ProductData(
+                    0,
+                    "",
+                    binding.postProductTitleEdit.text.toString(),
+                    binding.postProductDescrEdit.text.toString(),
+                    binding.postProductPriceEdit.text.toString().toInt(),
+                    0,
+                    1,
+                    binding.postProductCondiEdit.text.toString()
+                )
             )
             inputStream?.close()
-        }
-    }
-
-    private fun convertInputStreamToFile(ips: InputStream?): File {
-        val tempFile = File.createTempFile(String.valueOf(ips.hashCode()), ".tmp")
-        tempFile.deleteOnExit()
-        copyInputStreamToFile(ips!!, tempFile)
-        return tempFile
-    }
-
-    private fun copyInputStreamToFile(inputStream: InputStream, file: File) {
-        FileOutputStream(file).use { outputStream ->
-            var read: Int
-            val bytes = ByteArray(1024)
-            while (inputStream.read(bytes).also { read = it } != -1) {
-                outputStream.write(bytes, 0, read)
-            }
         }
     }
 

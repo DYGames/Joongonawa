@@ -28,14 +28,26 @@ class ProductRepository {
         }
     }
 
+    suspend fun makeCategoryListRequest(): Result<String> {
+        return withContext(Dispatchers.IO) {
+            return@withContext try {
+                val response = OkHttpClient().newCall(
+                    Request.Builder().url("http://10.0.2.2:3000/category").build()
+                ).execute()
+                Result.Success(response.body!!.string())
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        }
+    }
+
     fun makeImageUploadRequest(img: File): String {
         OkHttpClient().newCall(
             Request.Builder().url("http://10.0.2.2:3000/upload")
                 .post(
                     MultipartBody.Builder().setType(MultipartBody.FORM)
-                        .addFormDataPart("id", "Dygames")
                         .addFormDataPart(
-                            "files", "file.png",
+                            "image", "file.png",
                             img.asRequestBody("image/png".toMediaTypeOrNull())
                         ).build()
                 ).build()
