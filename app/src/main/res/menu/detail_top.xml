@@ -4,7 +4,6 @@
         android:id="@+id/menu_search"
         android:title="search"
         android:icon="@drawable/detail_back"
-        app:showAsAction="always"
         />
     <group>
         <item

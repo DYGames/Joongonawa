@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ItemDetailView">
 
     <ScrollView
         android:id="@+id/detail_scroll"
@@ -42,8 +44,7 @@
             </androidx.viewpager2.widget.ViewPager2>
 
             <Button
-                android:id="@+id/angry_btn"
-
+                android:id="@+id/detail_cautionBtn"
                 android:text="caution"
                 android:textColor="#0F0F0F"
                 android:textSize="20sp"
@@ -52,6 +53,43 @@
                 android:layout_height="50dp"
                 android:background="@drawable/detail_cautionbtn"
                 />
+
+            <LinearLayout
+                android:id="@+id/deta"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/detail_ItemBrandText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Brand Type"
+                    android:textSize="20dp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/detail_ItemEnglishNameText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="item English Title"
+                    android:textSize="15dp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/detail_ItemKoreanNameText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="item Korean Title"
+                    android:textSize="10dp"
+                    android:textStyle="bold"/>
+
+
+
+
+            </LinearLayout>
+
 
         </LinearLayout>
     </ScrollView>
