@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="-75dp"
+        tools:layout_editor_absoluteY="2dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginRight="20dp"
+            android:text="사이즈"
+            android:textSize="20dp"
+            android:textStyle="bold"></TextView>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_margin="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#D8D8D8"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:layout_margin="15dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <Button
+            android:id="@+id/size1"
+            android:layout_columnWeight="1"
+            android:text="S"/>
+        <Button
+            android:id="@+id/size2"
+            android:layout_columnWeight="1"
+            android:text="M"/>
+        <Button
+            android:id="@+id/size3"
+            android:layout_columnWeight="1"
+            android:text="L"/>
+        <Button
+            android:id="@+id/size4"
+            android:layout_columnWeight="1"
+            android:text="XL"/>
+    </GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
