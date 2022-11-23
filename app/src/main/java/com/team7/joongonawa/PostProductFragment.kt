@@ -2,7 +2,6 @@ package com.team7.joongonawa
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,14 +9,7 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.team7.joongonawa.databinding.FragmentPostProductBinding
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.lang.String
 import java.util.*
-import kotlin.ByteArray
-import kotlin.Int
-import kotlin.also
 
 
 class PostProductFragment : Fragment() {
@@ -37,10 +29,11 @@ class PostProductFragment : Fragment() {
 
         _binding = FragmentPostProductBinding.inflate(layoutInflater)
 
-        val viewModel = ProductViewModel(ProductRepository.instance)
-        viewModel.getCategoryList()
+        val categoryViewModel = CategoryViewModel(CategoryRepository.instance)
+        val productViewModel = ProductViewModel(ProductRepository.instance)
+        categoryViewModel.getCategoryList()
 
-        viewModel.categoryList.observe(this) { newList ->
+        categoryViewModel.categoryList.observe(this) { newList ->
             binding.postProductCategoryEdit.adapter = ArrayAdapter(requireContext(), com.google.android.material.R.layout.support_simple_spinner_dropdown_item, newList.map { it.name })
         }
 
@@ -50,7 +43,7 @@ class PostProductFragment : Fragment() {
 
         binding.postProductTitlePostButton.setOnClickListener {
             val inputStream = context?.contentResolver?.openInputStream(currentImage!!)
-            viewModel.uploadProduct(
+            productViewModel.uploadProduct(
                 Utils.convertInputStreamToFile(inputStream),
                 ProductData(
                     0,

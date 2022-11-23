@@ -17,36 +17,6 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
         }
     }
 
-    var categoryList = MutableLiveData<MutableList<CategoryData>>().apply {
-        viewModelScope.launch(Main) {
-            value = mutableListOf(CategoryData(0, "", ""))
-        }
-    }
-
-    fun getCategoryList() {
-        viewModelScope.launch {
-            var result = productRepository.makeCategoryListRequest()
-            when (result) {
-                is Result.Success<String> -> {
-                    val array = JSONObject(result.data).getJSONArray("data")
-                    val list = mutableListOf<CategoryData>()
-                    for (i in 0 until array.length()) {
-                        val p = CategoryData(
-                            array.getJSONObject(i).getInt("id"),
-                            array.getJSONObject(i).getString("pic"),
-                            array.getJSONObject(i).getString("name")
-                        )
-                        list.add(p)
-                    }
-                    categoryList.value = list
-                }
-                else -> {
-                    categoryList.value = mutableListOf(CategoryData(0, "", ""))
-                }
-            }
-        }
-    }
-
     fun getProductList(type: Int) {
         viewModelScope.launch {
             var result = productRepository.makeProductListRequest(type)
