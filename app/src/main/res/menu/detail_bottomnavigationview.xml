@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/detail_attention"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="관심 상품" />
+
+    <item
+        android:id="@+id/detail_buyBtn"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="구매" />
+
+    <item
+        android:id="@+id/detail_sellBtn"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="판매" />
+
+</menu>
