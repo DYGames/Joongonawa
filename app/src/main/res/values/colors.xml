@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="grey">#505866</color>
+    <color name="orange_red">#d32f2f</color>
+    <color name="blue_grey">#6699CC</color>
+
+    <color name = "joongonawa">#3060B0</color>
 </resources>
