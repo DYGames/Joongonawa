@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.team7.joongonawa.databinding.FragmentPostProductBinding
@@ -34,11 +35,18 @@ class PostProductFragment : Fragment() {
         categoryViewModel.getCategoryList()
 
         categoryViewModel.categoryList.observe(this) { newList ->
-            binding.postProductCategoryEdit.adapter = ArrayAdapter(requireContext(), com.google.android.material.R.layout.support_simple_spinner_dropdown_item, newList.map { it.name })
+            binding.postProductCategoryEdit.adapter = ArrayAdapter(
+                requireContext(),
+                com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
+                newList.map { it.name })
         }
 
         binding.postProductImage.setOnClickListener {
             imageResult.launch("image/Pictures/*")
+        }
+
+        productViewModel.uploadState.observe(this) {
+            Toast.makeText(activity, "업로드 성공", Toast.LENGTH_SHORT).show()
         }
 
         binding.postProductTitlePostButton.setOnClickListener {

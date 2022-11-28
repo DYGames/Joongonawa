@@ -28,52 +28,57 @@ class ProductRepository {
         }
     }
 
-    fun makeImageUploadRequest(img: File): String {
-        OkHttpClient().newCall(
-            Request.Builder().url("http://10.0.2.2:3000/upload")
-                .post(
-                    MultipartBody.Builder().setType(MultipartBody.FORM)
-                        .addFormDataPart(
-                            "image", "file.png",
-                            img.asRequestBody("image/png".toMediaTypeOrNull())
+    suspend fun makeImageUploadRequest(img: File): Result<String> {
+        return withContext(Dispatchers.IO) {
+            return@withContext try {
+                val timestamp = System.currentTimeMillis()
+                val filename = "${timestamp}.png"
+                val response = OkHttpClient().newCall(
+                    Request.Builder().url("http://10.0.2.2:3000/upload")
+                        .post(
+                            MultipartBody.Builder().setType(MultipartBody.FORM)
+                                .addFormDataPart(
+                                    "image", filename,
+                                    img.asRequestBody("image/png".toMediaTypeOrNull())
+                                ).build()
                         ).build()
-                ).build()
-        ).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.d("DYDYF", e.message.toString())
+                ).execute()
+                if (response.code == 200)
+                    Result.Success(response.body!!.string())
+                else
+                    Result.Error(Exception())
+            } catch (e: Exception) {
+                Result.Error(e)
             }
+        }
 
-            override fun onResponse(call: Call, response: Response) {
-                Log.d("DYDYR", response.body!!.string())
-            }
-        })
-        return "file.png"
     }
 
-    fun makeProductUploadRequest(data: ProductData) {
-        OkHttpClient().newCall(
-            Request.Builder().url("http://10.0.2.2:3000/product")
-                .post(
-                    FormBody.Builder()
-                        .add("id", data.id.toString())
-                        .add("pic", data.pic)
-                        .add("name", data.name)
-                        .add("descr", data.descr)
-                        .add("price", data.price.toString())
-                        .add("category", data.category.toString())
-                        .add("type", data.type.toString())
-                        .add("condi", data.condi).build()
-                ).build()
-        ).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.d("DYDY", e.message.toString())
+    suspend fun makeProductUploadRequest(data: ProductData): Result<String> {
+        return withContext(Dispatchers.IO) {
+            return@withContext try {
+                val response = OkHttpClient().newCall(
+                    Request.Builder().url("http://10.0.2.2:3000/product")
+                        .post(
+                            FormBody.Builder()
+                                .add("id", data.id.toString())
+                                .add("pic", data.pic)
+                                .add("name", data.name)
+                                .add("descr", data.descr)
+                                .add("price", data.price.toString())
+                                .add("category", data.category.toString())
+                                .add("type", data.type.toString())
+                                .add("condi", data.condi).build()
+                        ).build()
+                ).execute()
+                if (response.code == 200)
+                    Result.Success(response.body!!.string())
+                else
+                    Result.Error(Exception())
+            } catch (e: Exception) {
+                Result.Error(e)
             }
-
-            override fun onResponse(call: Call, response: Response) {
-                Log.d("DYDY", response.body!!.string())
-            }
-
-        })
+        }
     }
 }
 

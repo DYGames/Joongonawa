@@ -17,10 +17,12 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
         }
     }
 
+    var uploadState =
+        MutableLiveData<Boolean>().apply { viewModelScope.launch(Main) { value = false } }
+
     fun getProductList(type: Int) {
         viewModelScope.launch {
-            var result = productRepository.makeProductListRequest(type)
-            when (result) {
+            when (val result = productRepository.makeProductListRequest(type)) {
                 is Result.Success<String> -> {
                     val array = JSONObject(result.data).getJSONArray("data")
                     val list = mutableListOf<ProductData>()
@@ -47,7 +49,23 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
     }
 
     fun uploadProduct(img: File, data: ProductData) {
-        data.pic = productRepository.makeImageUploadRequest(img)
-        productRepository.makeProductUploadRequest(data)
+        viewModelScope.launch {
+            when (val result = productRepository.makeImageUploadRequest(img)) {
+                is Result.Success<String> -> {
+                    data.pic = JSONObject(result.data).getString("filename")
+                    when (val result1 = productRepository.makeProductUploadRequest(data)) {
+                        is Result.Success<String> -> {
+                            uploadState.value = true
+                        }
+                        else -> {
+
+                        }
+                    }
+                }
+                else -> {
+
+                }
+            }
+        }
     }
 }
