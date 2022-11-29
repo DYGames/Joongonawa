@@ -102,7 +102,6 @@
                 android:layout_height="wrap_content"
                 android:hint="전화번호"
                 android:inputType="phone"
-                android:privateImeOptions="defaultInputmode=korean"
                 android:scrollHorizontally="false"/>
             <TextView
                 android:layout_width="wrap_content"
@@ -152,9 +151,10 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/IDEdit"
                 android:scrollHorizontally="false"
+                android:privateImeOptions="defaultInputmode=english"
                 android:inputType="textPersonName"
                 android:hint="아이디"
-                android:privateImeOptions="defaultInputmode=korean"/>
+                />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -20,6 +20,7 @@ class SignUpInformAgree : AppCompatActivity() {
         firstCheckBox.setOnClickListener { onCheckChanged(firstCheckBox) }
         secondCheckBox.setOnClickListener { onCheckChanged(secondCheckBox) }
         thirdCheckBox.setOnClickListener { onCheckChanged(thirdCheckBox) }
+        fourthCheckBox.setOnClickListener { onCheckChanged(thirdCheckBox) }
 
 
         btnfirstAgree.paintFlags = Paint.UNDERLINE_TEXT_FLAG
