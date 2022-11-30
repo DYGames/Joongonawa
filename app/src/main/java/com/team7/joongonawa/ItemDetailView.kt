@@ -287,7 +287,7 @@ class ItemDetailView : AppCompatActivity() {
     fun priceChange(now:Int, prev: Int) {
         val text = binding.detailItemPriceChange
         val change = prev - now
-        val percent:Double = now.toDouble()/prev.toDouble()*10
+        val percent:Double = now.toDouble()/prev.toDouble()
 
         if (change > 0){
             text.text = "▲" + change.toString() +"(+" + String.format("%.1f", percent) + "%)"
