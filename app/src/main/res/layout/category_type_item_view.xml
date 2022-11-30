@@ -23,5 +23,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="10dp"
-        android:background="@drawable/edit_round"/>
+        android:background="@drawable/edit_round"
+        android:visibility="invisible"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

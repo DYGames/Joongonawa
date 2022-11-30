@@ -7,12 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
 
 
 class CategoryAdapter(private val context : Context) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
@@ -20,17 +16,20 @@ class CategoryAdapter(private val context : Context) : RecyclerView.Adapter<Cate
         private val categoryImg : ImageView = itemView.findViewById(R.id.categoryImage)
         private val categoryTitle : TextView = itemView.findViewById(R.id.categoryTitle)
 
-        fun bind(category : CategoryItemData) {
-            Glide.with(itemView).load(category.img).into(categoryImg)
-            categoryTitle.text = category.title
+        fun bind(category : CategoryData) {
+            Glide.with(itemView).load(category.pic).into(categoryImg)
+            categoryTitle.text = category.name
             itemView.setOnClickListener(View.OnClickListener {
                 val intent = Intent(context, CategoryTypeActivity::class.java)
-                intent.putExtra("categoryName", categoryTitle.text)
+                intent.apply {
+                    putExtra("categoryId", category.id)
+                    putExtra("categoryName", category.name)
+                }
                 intent.run{ context.startActivity(this)}
             })
         }
     }
-    var datas = mutableListOf<CategoryItemData>()
+    var datas = mutableListOf<CategoryData>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.category_item_view, parent, false)
         return ViewHolder(view)
