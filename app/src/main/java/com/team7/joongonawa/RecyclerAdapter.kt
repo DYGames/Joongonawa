@@ -37,7 +37,7 @@ class RecyclerAdapter(var itemList: ArrayList<ItemData>, var con: Context) :
                     var position = adapterPosition
                     var item = filteredItem[position]
                     setTitle(item.name)
-                    setMessage(item.price)
+                    setMessage(item.price.toString())
                     setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
                         Toast.makeText(con, "OK Button Click", Toast.LENGTH_SHORT).show()
                     })

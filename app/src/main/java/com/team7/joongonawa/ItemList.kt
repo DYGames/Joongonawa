@@ -1,5 +1,6 @@
 package com.team7.joongonawa
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -19,11 +20,15 @@ class ItemList : AppCompatActivity() {
     lateinit var lowcheck: CheckBox
     lateinit var searchview: SearchView
 
+    var _binding: ActivityItemListBinding? = null
+    val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_item_list)
-        rec = findViewById(R.id.rec)
-        searchview = findViewById(R.id.searchview)
+        _binding = ActivityItemListBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        rec = binding.rec
+        searchview = binding.searchview
         searchview.setOnQueryTextListener(searchViewTextListener)
 
         val productListViewModel = ProductListViewModel(ProductListRepository.instance)
@@ -32,13 +37,18 @@ class ItemList : AppCompatActivity() {
         rec.layoutManager = LinearLayoutManager(this)
         recyclerAdapter = RecyclerAdapter(mutableListOf<ItemData>() as ArrayList<ItemData>, this)
         rec.adapter = recyclerAdapter
-         productListViewModel.productList.observe(this) {
+        productListViewModel.productList.observe(this) {
 
-             Log.d("TEST", it.size.toString())
-             recyclerAdapter.itemList = it as ArrayList<ItemData>
-             recyclerAdapter.filter.filter("")
-             recyclerAdapter.notifyDataSetChanged()
-         }
+            Log.d("TEST", it.size.toString())
+            recyclerAdapter.itemList = it as ArrayList<ItemData>
+            recyclerAdapter.filter.filter("")
+            recyclerAdapter.notifyDataSetChanged()
+        }
+
+        binding.fabItemList.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
         Lowcheck()
     }
 
@@ -61,9 +71,9 @@ class ItemList : AppCompatActivity() {
     fun Lowcheck() {
         lowcheck = findViewById(R.id.lowcheck)
         lowcheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if(isChecked){
+            if (isChecked) {
                 recyclerAdapter.lowcheck()
-            } else{
+            } else {
             }
         }
     }
