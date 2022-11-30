@@ -31,7 +31,7 @@ class UpdateCategoryFragment : Fragment() {
             currentImage = result
         }
 
-    private val categoryViewModel = CategoryViewModel(CategoryRepository.instance)
+    //private val categoryViewModel = CategoryViewModel(CategoryRepository.instance)
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -44,6 +44,9 @@ class UpdateCategoryFragment : Fragment() {
         binding.uploadCategoryImageBtn.setOnClickListener {
             imageResult.launch("image/Pictures/*")
         }
+
+        val categoryViewModel = (requireActivity() as CategoryActivity).categoryViewModel
+
         binding.confirmCategoryUpdateBtn.setOnClickListener {
             val inputStream = context?.contentResolver?.openInputStream(currentImage!!)
             categoryViewModel.uploadCategory(
@@ -55,7 +58,7 @@ class UpdateCategoryFragment : Fragment() {
                 )
             )
             inputStream?.close()
-            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+            //activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
         }
     }
     override fun onCreateView(
@@ -65,10 +68,14 @@ class UpdateCategoryFragment : Fragment() {
         return binding.root
     }
 
-
+    override fun onStop() {
+        super.onStop()
+        (requireActivity() as CategoryActivity).categoryViewModel.getCategoryList()
+    }
 
     override fun onDestroy() {
         _binding = null
+
         super.onDestroy()
     }
 }

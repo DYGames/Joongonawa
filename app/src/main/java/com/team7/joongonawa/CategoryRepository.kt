@@ -85,8 +85,6 @@ class CategoryRepository {
                                 .add("name", data.name).build()
                         ).build()
                 ).execute()
-                Log.d("hrhr", response.code.toString())
-                Log.d("dfdsfsf", response.body.toString())
                 if (response.code == 200)
                     Result.Success(response.body!!.string())
                 else
@@ -109,7 +107,6 @@ class CategoryRepository {
                         ).build()
                 ).execute()
                 Log.d("id", categoryId.toString())
-                Log.d("hrhr", response.code.toString())
                 if (response.code == 200)
                     Result.Success(response.body!!.string())
                 else

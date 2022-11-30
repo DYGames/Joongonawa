@@ -17,7 +17,7 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
     }
 
     var categoryTypeList = MutableLiveData<MutableList<CategoryTypeData>>().apply {
-        viewModelScope.launch(Dispatchers.Main){
+        viewModelScope.launch(Dispatchers.Main) {
         }
     }
 
@@ -37,8 +37,10 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
                             array.getJSONObject(i).getString("pic"),
                             array.getJSONObject(i).getString("name")
                         )
+
                         list.add(p)
                     }
+
                     categoryList.value = list
                 }
                 else -> {
@@ -47,7 +49,8 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
             }
         }
     }
-    fun getCategoryTypeList(categoryId : Int) {
+
+    fun getCategoryTypeList(categoryId: Int) {
         viewModelScope.launch {
             var result = categoryRepository.makeCategoryTypeListRequest(categoryId)
             when (result) {
@@ -65,18 +68,17 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
                     categoryTypeList.value = list
                 }
                 else -> {
-                    categoryTypeList.value = mutableListOf(CategoryTypeData( "", "", 0))
+                    categoryTypeList.value = mutableListOf(CategoryTypeData("", "", 0))
                 }
             }
         }
     }
+
     fun uploadCategory(img: File, data: CategoryData) {
         viewModelScope.launch {
             when (val result = categoryRepository.makeImageUploadRequest(img)) {
                 is Result.Success<String> -> {
-                    Log.d("DYDYS", result.data)
                     data.pic = JSONObject(result.data).getString("filename")
-                    Log.d("addedData", data.name)
                     when (val result1 = categoryRepository.makeCategoryUploadRequest(data)) {
                         is Result.Success<String> -> {
                             uploadState.value = true
@@ -93,12 +95,14 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
             }
         }
     }
+
     fun uploadCategoryType(img: File, data: CategoryTypeData, categoryId: Int) {
         viewModelScope.launch {
             when (val result = categoryRepository.makeImageUploadRequest(img)) {
                 is Result.Success<String> -> {
                     data.pic = JSONObject(result.data).getString("filename")
-                    when (val result1 = categoryRepository.makeCategoryTypeUploadRequest(data, categoryId)) {
+                    when (val result1 =
+                        categoryRepository.makeCategoryTypeUploadRequest(data, categoryId)) {
                         is Result.Success<String> -> {
                             uploadState.value = true
                         }
