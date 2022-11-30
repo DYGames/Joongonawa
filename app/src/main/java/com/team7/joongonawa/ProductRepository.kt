@@ -15,6 +15,19 @@ class ProductRepository {
         val instance = ProductRepository()
     }
 
+    suspend fun makeItemListRequest(): Result<String> {
+        return withContext(Dispatchers.IO) {
+            return@withContext try {
+                val response = OkHttpClient().newCall(
+                    Request.Builder().url("http://10.0.2.2:3000/tradeHistory").build()
+                ).execute()
+                Result.Success(response.body!!.string())
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        }
+    }
+
     suspend fun makeProductListRequest(type: Int): Result<String> {
         return withContext(Dispatchers.IO) {
             return@withContext try {
@@ -51,7 +64,6 @@ class ProductRepository {
                 Result.Error(e)
             }
         }
-
     }
 
     suspend fun makeProductUploadRequest(data: ProductData): Result<String> {

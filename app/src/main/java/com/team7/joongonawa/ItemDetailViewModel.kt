@@ -1,25 +1,51 @@
 package com.team7.joongonawa
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import org.json.JSONObject
-import java.io.File
-import kotlin.reflect.typeOf
 
-class ProductViewModel(private val productRepository: ProductRepository) : ViewModel() {
+class ItemDetailViewModel(private val productRepository: ProductRepository) : ViewModel() {
     var productList = MutableLiveData<MutableList<ProductData>>().apply {
         viewModelScope.launch(Main) {
             value = mutableListOf(ProductData(0, "", "", "", 0, 0, 0, ""))
         }
     }
-
+    var itemList = MutableLiveData<MutableList<ItemData>>().apply{
+        viewModelScope.launch(Main) {
+            value = mutableListOf(ItemData(0, "", "", 0, 0))
+        }
+    }
 
     var uploadState =
         MutableLiveData<Boolean>().apply { viewModelScope.launch(Main) { value = false } }
+
+    fun getItemList() {
+        viewModelScope.launch {
+            when (val result = productRepository.makeItemListRequest()) {
+                is Result.Success<String> -> {
+                    val array = JSONObject(result.data).getJSONArray("data")
+                    val list = mutableListOf<ItemData>()
+                    for (i in 0 until array.length()){
+                        val p = ItemData(
+                            array.getJSONObject(i).getInt("id"),
+                            array.getJSONObject(i).getString("size"),
+                            array.getJSONObject(i).getString("tradeDate"),
+                            array.getJSONObject(i).getInt("price"),
+                            array.getJSONObject(i).getInt("amount"),
+                        )
+                        list.add(p)
+                    }
+                    itemList.value = list
+                }
+                else -> {
+                    itemList.value = mutableListOf(ItemData(0, "", "", 0, 0))
+                }
+            }
+        }
+    }
 
     fun getProductList(type: Int) {
         viewModelScope.launch {
@@ -44,27 +70,6 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
                 }
                 else -> {
                     productList.value = mutableListOf(ProductData(0, "", "", "", 0, 0, 0, ""))
-                }
-            }
-        }
-    }
-
-    fun uploadProduct(img: File, data: ProductData) {
-        viewModelScope.launch {
-            when (val result = productRepository.makeImageUploadRequest(img)) {
-                is Result.Success<String> -> {
-                    data.pic = JSONObject(result.data).getString("filename")
-                    when (val result1 = productRepository.makeProductUploadRequest(data)) {
-                        is Result.Success<String> -> {
-                            uploadState.value = true
-                        }
-                        else -> {
-
-                        }
-                    }
-                }
-                else -> {
-
                 }
             }
         }
