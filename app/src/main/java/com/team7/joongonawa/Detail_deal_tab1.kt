@@ -14,7 +14,7 @@ import androidx.core.view.marginTop
 
 class Detail_deal_tab1 : Fragment() {
     lateinit var binding: Detail_deal_tab1
-
+    lateinit var tradeDatabase : ItemDetailViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -23,13 +23,25 @@ class Detail_deal_tab1 : Fragment() {
 
         // 거래 내역 추가
         val tab1_tableLayout = rootView.findViewById<TableLayout>(R.id.tab1_table)
-        var tab1_table : ArrayList<TableData> = arrayListOf(
-            TableData("XL", "49,000원", "2022/10/12"),
-            TableData("S", "58,000원", "2022/10/11"),
-            TableData("L", "59,000원", "2022/10/10"),
-            TableData("M", "47,000원", "2022/10/09"),
-            TableData("M", "51,000원", "2022/10/08"),
-        )
+        var tab1_table : ArrayList<TableData> = ArrayList<TableData>()
+
+//            arrayListOf(
+//            TableData("XL", "49,000원", "2022/10/12"),
+//            TableData("S", "58,000원", "2022/10/11"),
+//            TableData("L", "59,000원", "2022/10/10"),
+//            TableData("M", "47,000원", "2022/10/09"),
+//            TableData("M", "51,000원", "2022/10/08"),
+//        )
+
+        tradeDatabase = ItemDetailViewModel(ProductRepository.instance)
+        tradeDatabase.itemList.observe(this.viewLifecycleOwner) {
+            for (data in it){
+                var priceResult = data.price.toString() + "원"
+                var date = data.tradeDate.replace("-", "/")
+//                    .slice(IntRange(0,10))
+                tab1_table.add(TableData(data.size, priceResult, date))
+            }
+        }
 
         for (data in tab1_table){
             val tableRow = TableRow(activity)

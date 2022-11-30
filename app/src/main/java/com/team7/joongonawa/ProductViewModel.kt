@@ -17,6 +17,7 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
         }
     }
 
+
     var uploadState =
         MutableLiveData<Boolean>().apply { viewModelScope.launch(Main) { value = false } }
 

@@ -18,6 +18,8 @@ import android.widget.TextView
  */
 class Detail_deal_tab3 : Fragment() {
 
+    lateinit var tradeDatabase : ItemDetailViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -26,13 +28,24 @@ class Detail_deal_tab3 : Fragment() {
 
         // 거래 내역 추가
         val tab3_tableLayout = rootView.findViewById<TableLayout>(R.id.tab3_table)
-        var tab3_table : ArrayList<TableData> = arrayListOf(
-            TableData("L", "47,000원", "2"),
-            TableData("XL", "49,000원", "3"),
-            TableData("S", "51,000원", "3"),
-            TableData("S", "58,000원", "1"),
-            TableData("L", "59,000원", "1"),
-        )
+        var tab3_table : ArrayList<TableData> = ArrayList<TableData>()
+
+//            arrayListOf(
+//            TableData("L", "47,000원", "2"),
+//            TableData("XL", "49,000원", "3"),
+//            TableData("S", "51,000원", "3"),
+//            TableData("S", "58,000원", "1"),
+//            TableData("L", "59,000원", "1"),
+//        )
+
+        tradeDatabase = ItemDetailViewModel(ProductRepository.instance)
+        tradeDatabase.itemList.observe(this.viewLifecycleOwner) {
+            for (data in it){
+                var priceResult = data.price.toString() + "원"
+                var amountResult = data.amount.toString()
+                tab3_table.add(TableData(data.size, priceResult, amountResult))
+            }
+        }
 
         for (data in tab3_table){
             val tableRow = TableRow(activity)

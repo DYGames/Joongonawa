@@ -1,16 +1,21 @@
 package com.team7.joongonawa
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
+import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import android.os.Build
 import android.os.Bundle
 import android.text.Layout
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.GridLayout
+import android.widget.GridLayout.LayoutParams
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TableLayout
 import android.widget.TableRow
@@ -18,10 +23,13 @@ import android.widget.TextView
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.marginLeft
+import androidx.core.view.marginRight
+import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
@@ -36,13 +44,65 @@ class ItemDetailView : AppCompatActivity() {
     private  lateinit var binding: ProductpageActivityBinding
     lateinit var sheetDialog: BottomSheetDialog
     lateinit var lineChart: LineChart
+    lateinit var database: ProductViewModel
+    lateinit var tradeDatabase : ItemDetailViewModel
     private val chartData = ArrayList<com.team7.joongonawa.ChartData>()
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 뷰 바인딩
         binding = ProductpageActivityBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        database = ProductViewModel(ProductRepository.instance)
+        database.productList.observe(this) {
+
+            // Product data
+            // 상품 브랜드, 이름, 카테고리 설정
+            binding.detailItemBrandText.text = it[0].id.toString()
+            binding.detailItemEnglishNameText.text = it[0].name
+            binding.detailItemKoreanNameText.text = it[0].category.toString()
+
+            val buyBrand = findViewById<TextView>(R.id.detail_ItemBrandText)
+            buyBrand.text = it[0].id.toString()
+
+            val buyName = findViewById<TextView>(R.id.detail_ItemEnglishNameText)
+            buyName.text = it[0].name
+
+            val buyCategory = findViewById<TextView>(R.id.detail_ItemEnglishNameText)
+            buyCategory.text = it[0].category.toString()
+
+            // 가격 설정
+            binding.detailItemPrice.text = it[0].price.toString() + "원"
+            priceChange(it[0].price, 45000)
+
+
+            // 이미지 설정
+//            val imgList = arrayListOf<Int>(Glide.with())
+//            binding.detailViewpager.adapter = Detail_Picture_ViewPagerAdapter(imgList)
+
+//            val img = Glide.with()
+//            val buyImage = findViewById<ImageView>(R.id.detail_viewpager_img)
+//            buyImage.setImageResource(img)
+
+
+        }
+
+        tradeDatabase = ItemDetailViewModel(ProductRepository.instance)
+        tradeDatabase.itemList.observe(this) {
+            for (data in it){
+                var month = data.tradeDate
+//                    .slice(IntRange(5, 9))
+                month.replace("-", "월")
+                month = month + "일"
+
+                addChartItem(month, data.price)
+            }
+        }
+
+
+        // 글자 바꿔주기
 
         // 이미지 ViewPager2 적용 코드
         binding.detailViewpager.adapter = Detail_Picture_ViewPagerAdapter(getImgList())
@@ -58,6 +118,45 @@ class ItemDetailView : AppCompatActivity() {
         // 후에 size_sheet에 있는 사이즈 버튼 눌리면 detailCautionBtn 텍스트랑 최근 거래가 바꾸기
         var sheetLayout = LayoutInflater.from(this).inflate(R.layout.size_sheet, null, false)
 
+        val grid = sheetLayout.findViewById<GridLayout>(R.id.detail_sizesheet_grid)
+        val btn = createBtn("SS", "50000")
+//        grid.addView(btn)
+
+        val sizeBtn1 = sheetLayout.findViewById<Button>(R.id.size1)
+        sizeBtn1.setOnClickListener {
+            val btnText = sizeBtn1.text.split("\n")
+            val size = btnText[0]
+            val price = btnText[1]
+            onClickSizeSheet(size, price)
+            sheetDialog.dismiss()
+        }
+
+        val sizeBtn2 = sheetLayout.findViewById<Button>(R.id.size2)
+        sizeBtn2.setOnClickListener {
+            val btnText = sizeBtn2.text.split("\n")
+            val size = btnText[0]
+            val price = btnText[1]
+            onClickSizeSheet(size, price)
+            sheetDialog.dismiss()
+        }
+
+        val sizeBtn3 = sheetLayout.findViewById<Button>(R.id.size3)
+        sizeBtn3.setOnClickListener {
+            val btnText = sizeBtn3.text.split("\n")
+            val size = btnText[0]
+            val price = btnText[1]
+            onClickSizeSheet(size, price)
+            sheetDialog.dismiss()
+        }
+
+        val sizeBtn4 = sheetLayout.findViewById<Button>(R.id.size4)
+        sizeBtn4.setOnClickListener {
+            val btnText = sizeBtn4.text.split("\n")
+            val size = btnText[0]
+            val price = btnText[1]
+            onClickSizeSheet(size, price)
+            sheetDialog.dismiss()
+        }
 
         sheetDialog = BottomSheetDialog(this)
         sheetDialog.setContentView(sheetLayout)
@@ -73,6 +172,32 @@ class ItemDetailView : AppCompatActivity() {
         buyDialog.setContentView(buyLayout)
         buyDialog.closeOptionsMenu()
 
+        val nextBtn = buyLayout.findViewById<Button>(R.id.nextBtn)
+
+        val buy1 = buyLayout.findViewById<Button>(R.id.buy1)
+        buy1.setOnClickListener {
+            val price = buy1.text.split("\n")[1]
+            nextBtn.text = price
+        }
+
+        val buy2 = buyLayout.findViewById<Button>(R.id.buy2)
+        buy2.setOnClickListener {
+            val price = buy2.text.split("\n")[1]
+            nextBtn.text = price
+        }
+
+        val buy3 = buyLayout.findViewById<Button>(R.id.buy3)
+        buy3.setOnClickListener {
+            val price = buy3.text.split("\n")[1]
+            nextBtn.text = price
+        }
+
+        val buy4 = buyLayout.findViewById<Button>(R.id.buy4)
+        buy4.setOnClickListener {
+            val price = buy4.text.split("\n")[1]
+            nextBtn.text = price
+        }
+
         binding.detailHomeBuy.setOnClickListener {
             buyDialog.window?.setLayout(
                 ViewGroup.LayoutParams.MATCH_PARENT,
@@ -85,11 +210,11 @@ class ItemDetailView : AppCompatActivity() {
         chartData.clear()
 
         // 차트에 데이터 넣어주기
-        addChartItem("12일", 49000)
-        addChartItem("11일", 58000)
-        addChartItem("10일", 59000)
-        addChartItem("9일", 47000)
-        addChartItem("8일", 51000)
+//        addChartItem("12일", 49000)
+//        addChartItem("11일", 58000)
+//        addChartItem("10일", 59000)
+//        addChartItem("9일", 47000)
+//        addChartItem("8일", 51000)
 
         // 차트 그리기
         LineChartGraph(chartData, "3개월 그래프")
@@ -111,19 +236,58 @@ class ItemDetailView : AppCompatActivity() {
         priceChange(49000, 27000)
 
 
-        // 버튼 동적 추기
-//        var grid = findViewById<GridLayout>(R.id.detail_sizesheet_grid)
-//        layoutInflater.inflate(R.layout.size_sheet, grid, true)
-//        val btn = createBtn("sa", "10000")
-//        grid.addView(btn)
 
+    }
 
+    private fun onClickBuySheet() {
+
+    }
+
+    private fun onClickSizeSheet(size: String, price: String) {
+
+        val _price = findViewById<TextView>(R.id.detail_itemPrice)
+        val nprice = price.replace(",", "").replace("원", "")
+        _price.text = price + "원"
+
+        var buyLayout = LayoutInflater.from(this).inflate(R.layout.detail_buy, null, false)
+        val nextBtn = buyLayout.findViewById<Button>(R.id.nextBtn)
+        nextBtn.text = price
+
+        val _size = findViewById<Button>(R.id.detail_sizeBtn)
+        _size.text = size
+
+        priceChange(nprice.toInt(), 51000)
+
+        sheetDialog.dismiss()
+
+    }
+
+    private fun createBtn(size: String, price: String) : Button{
+        val btn = Button(this).apply {
+            text = size + "\n" + price
+            background = getDrawable(R.drawable.detail_sizesheet_btn)
+
+            layoutParams = GridLayout.LayoutParams()
+            layoutParams.width = GridLayout.LayoutParams.WRAP_CONTENT
+            layoutParams.height = GridLayout.LayoutParams.WRAP_CONTENT
+
+            gravity = Gravity.CENTER
+            setOnClickListener {
+                val size = size
+                val price = price
+                onClickSizeSheet(size, price)
+                sheetDialog.dismiss()
+            }
+        }
+        btn.setBackgroundColor(Color.WHITE)
+
+        return btn
     }
 
     fun priceChange(now:Int, prev: Int) {
         val text = binding.detailItemPriceChange
         val change = prev - now
-        val percent:Double = now.toDouble()/prev.toDouble()
+        val percent:Double = now.toDouble()/prev.toDouble()*10
 
         if (change > 0){
             text.text = "▲" + change.toString() +"(+" + String.format("%.1f", percent) + "%)"
@@ -195,34 +359,6 @@ class ItemDetailView : AppCompatActivity() {
     private fun getImgList() : ArrayList<Int> {
         return arrayListOf<Int>(R.drawable.detail_item_ex1, R.drawable.detail_item_ex2)
     }
-
-    private fun createBtn(size: String, price: String) : Button{
-        val btn = Button(this).apply {
-            text = size + "\n" + price
-            background = getDrawable(R.drawable.detail_sizesheet_btn)
-
-            setLayoutParams(
-                LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                ))
-
-            setOnClickListener {
-                val _price = findViewById<TextView>(R.id.detail_itemPrice)
-                _price.text = price
-
-                val _size = findViewById<Button>(R.id.detail_sizeBtn)
-                _size.text = size
-
-                priceChange(price.toInt(), 51000)
-
-                sheetDialog.dismiss()
-            }
-        }
-
-        return btn
-    }
-
 
 }
 
