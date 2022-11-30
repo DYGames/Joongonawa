@@ -107,6 +107,7 @@ class CategoryRepository {
                         ).build()
                 ).execute()
                 Log.d("id", categoryId.toString())
+                Log.d("code", response.code.toString())
                 if (response.code == 200)
                     Result.Success(response.body!!.string())
                 else

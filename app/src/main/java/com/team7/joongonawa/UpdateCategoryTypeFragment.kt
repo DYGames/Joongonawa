@@ -43,7 +43,7 @@ class UpdateCategoryTypeFragment : Fragment() {
             imageResult.launch("image/Pictures/*")
         }
 
-        val categoryViewModel = (requireActivity() as CategoryActivity).categoryViewModel
+        val categoryViewModel = (requireActivity() as CategoryTypeActivity).categoryViewModel
 
         categoryViewModel.getCategoryTypeList(categoryTypeActivity.categoryId)
 
@@ -59,7 +59,7 @@ class UpdateCategoryTypeFragment : Fragment() {
                 categoryTypeActivity.categoryId
             )
             inputStream?.close()
-            //activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
         }
     }
     override fun onCreateView(
@@ -71,7 +71,7 @@ class UpdateCategoryTypeFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        (requireActivity() as CategoryActivity).categoryViewModel.getCategoryList()
+        (requireActivity() as CategoryTypeActivity).categoryViewModel.getCategoryTypeList(categoryTypeActivity.categoryId)
     }
 
     override fun onDestroy() {

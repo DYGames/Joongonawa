@@ -30,14 +30,12 @@ class CategoryActivity : AppCompatActivity() {
 
         var updateCategoryFragment = UpdateCategoryFragment()
         categoryViewModel.uploadState.observe(this) {
-            Log.d("DY", it.toString())
             if (it) {
-                //categoryViewModel.getCategoryList()
+                categoryViewModel.getCategoryList()
                 supportFragmentManager.beginTransaction().remove(updateCategoryFragment).commit()
             }
         }
         categoryViewModel.categoryList.observe(this) {
-            Log.d("TT", "dd")
             datas.clear()
 
             datas.apply {
@@ -46,7 +44,6 @@ class CategoryActivity : AppCompatActivity() {
             }
             categoryAdapter.datas = datas
             categoryAdapter.notifyDataSetChanged()
-            Log.d("changed", it.size.toString())
         }
 
         binding.addCategoryBtn.setOnClickListener(View.OnClickListener {

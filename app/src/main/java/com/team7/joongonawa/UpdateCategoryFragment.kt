@@ -52,13 +52,13 @@ class UpdateCategoryFragment : Fragment() {
             categoryViewModel.uploadCategory(
                 Utils.convertInputStreamToFile(inputStream),
                 CategoryData(
-                    Random().nextInt(10)+10,
+                    0,
                     currentImage.toString(),
                     binding.categoryNameInput.text.toString()
                 )
             )
             inputStream?.close()
-            //activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
         }
     }
     override fun onCreateView(
