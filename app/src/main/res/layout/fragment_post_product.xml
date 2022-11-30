@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PostProductFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/post_product_header_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="상품 등록"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="@id/post_product_title_edit"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/post_product_pic_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="상품 이미지 등록"
+                app:layout_constraintLeft_toLeftOf="@id/post_product_title_edit"
+                app:layout_constraintTop_toBottomOf="@id/post_product_header_text" />
+
+            <ImageButton
+                android:id="@+id/post_product_image"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:elevation="20dp"
+                android:src="@drawable/ic_baseline_add_photo_alternate_24"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/post_product_pic_text"
+                app:layout_goneMarginTop="15dp" />
+
+            <TextView
+                android:id="@+id/post_product_title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="글 제목"
+                app:layout_constraintLeft_toLeftOf="@id/post_product_title_edit"
+                app:layout_constraintTop_toBottomOf="@id/post_product_image" />
+
+            <EditText
+                android:id="@+id/post_product_title_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/post_product_title_text" />
+
+            <TextView
+                android:id="@+id/post_product_descr_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="설명"
+                app:layout_constraintLeft_toLeftOf="@id/post_product_descr_edit"
+                app:layout_constraintTop_toBottomOf="@id/post_product_title_edit" />
+
+            <EditText
+                android:id="@+id/post_product_descr_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/post_product_descr_text" />
+
+            <TextView
+                android:id="@+id/post_product_price_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="가격"
+                app:layout_constraintLeft_toLeftOf="@id/post_product_price_edit"
+                app:layout_constraintTop_toBottomOf="@id/post_product_descr_edit" />
+
+            <EditText
+                android:id="@+id/post_product_price_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/post_product_price_text" />
+
+            <TextView
+                android:id="@+id/post_product_category_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="카테고리"
+                app:layout_constraintLeft_toLeftOf="@id/post_product_category_edit"
+                app:layout_constraintTop_toBottomOf="@id/post_product_price_edit" />
+
+            <Spinner
+                android:id="@+id/post_product_category_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/post_product_category_text" />
+
+            <TextView
+                android:id="@+id/post_product_type_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="상품 명"
+                app:layout_constraintLeft_toLeftOf="@id/post_product_type_edit"
+                app:layout_constraintTop_toBottomOf="@id/post_product_category_edit" />
+
+            <EditText
+                android:id="@+id/post_product_type_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/post_product_type_text" />
+
+            <TextView
+                android:id="@+id/post_product_condi_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="상태"
+                app:layout_constraintLeft_toLeftOf="@id/post_product_condi_edit"
+                app:layout_constraintTop_toBottomOf="@id/post_product_type_edit" />
+
+            <EditText
+                android:id="@+id/post_product_condi_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/post_product_condi_text" />
+
+            <Button
+                android:id="@+id/post_product_title_post_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="30dp"
+                android:text="등록"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/post_product_condi_edit" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

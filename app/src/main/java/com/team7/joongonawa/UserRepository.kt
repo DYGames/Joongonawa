@@ -10,12 +10,12 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.io.IOException
 
-class ProductRepository {
+class UserRepository {
     companion object {
-        val instance = ProductRepository()
+        val instance = UserRepository()
     }
 
-    suspend fun makeProductListRequest(type: Int): Result<String> {
+    suspend fun makeUserInfoListRequest(type: Int): Result<String> {
         return withContext(Dispatchers.IO) {
             return@withContext try {
                 val response = OkHttpClient().newCall(
@@ -28,19 +28,18 @@ class ProductRepository {
         }
     }
 
-    suspend fun makeImageUploadRequest(img: File): Result<String> {
+    suspend fun makeUserSignUpRequest(data: UserData): Result<String> {
         return withContext(Dispatchers.IO) {
             return@withContext try {
-                val timestamp = System.currentTimeMillis()
-                val filename = "${timestamp}.png"
                 val response = OkHttpClient().newCall(
-                    Request.Builder().url("http://10.0.2.2:3000/upload")
+                    Request.Builder().url("https://joongonawa-server-kfjur.run.goorm.io/signup")
                         .post(
-                            MultipartBody.Builder().setType(MultipartBody.FORM)
-                                .addFormDataPart(
-                                    "image", filename,
-                                    img.asRequestBody("image/png".toMediaTypeOrNull())
-                                ).build()
+                            FormBody.Builder()
+//                                .add("email", data.email)
+//                                .add("phonenumber", data.phonenumber)
+                                .add("id", data.id)
+                                .add("nickname", data.nickname)
+                                .add("password", data.password).build()
                         ).build()
                 ).execute()
                 if (response.code == 200)
@@ -51,28 +50,18 @@ class ProductRepository {
                 Result.Error(e)
             }
         }
-
     }
-
-    suspend fun makeProductUploadRequest(data: ProductData): Result<String> {
+    suspend fun makeUserSignInRequest(data: UserData): Result<String> {
         return withContext(Dispatchers.IO) {
             return@withContext try {
                 val response = OkHttpClient().newCall(
-                    Request.Builder().url("http://10.0.2.2:3000/product")
-                        .post(
-                            FormBody.Builder()
-                                .add("id", data.id.toString())
-                                .add("pic", data.pic)
-                                .add("name", data.name)
-                                .add("descr", data.descr)
-                                .add("price", data.price.toString())
-                                .add("category", data.category.toString())
-                                .add("type", data.type.toString())
-                                .add("condi", data.condi).build()
-                        ).build()
+                    Request.Builder().url("https://joongonawa-server-kfjur.run.goorm.io/login?id=${data.id}&password=${data.password}")
+                      .build()
                 ).execute()
                 if (response.code == 200)
                     Result.Success(response.body!!.string())
+                else if(response.code == 201)
+                    Result.Failed(response.body!!.string())
                 else
                     Result.Error(Exception())
             } catch (e: Exception) {
@@ -82,3 +71,8 @@ class ProductRepository {
     }
 }
 
+sealed class Result<out R> {
+    data class Success<out T>(val data: T) : Result<T>()
+    data class Error(val exception: Exception) : Result<Nothing>()
+    data class Failed<out T>(val data: T) : Result<T>()
+}
