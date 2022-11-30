@@ -4,12 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-<!--    <TextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="이름을 입력하세요"-->
-<!--        android:paddingBottom="10dp"/>-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
 
 
     <RelativeLayout
@@ -217,6 +220,11 @@
 
 
     </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
 
 
 

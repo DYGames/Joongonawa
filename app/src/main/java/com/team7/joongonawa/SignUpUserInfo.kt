@@ -4,6 +4,8 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_signup_userinfo.*
 
@@ -12,10 +14,16 @@ class SignUpUserInfo : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup_userinfo)
+        val userViewModel = UserViewModel(UserRepository.instance)
 
-
-        btnBackToInformAgree.setOnClickListener{
-
+        userViewModel.uploadState.observe(this) {
+            if(it) {
+                Toast.makeText(this, "중고나와에 오신 걸 환영합니다", Toast.LENGTH_SHORT).show()
+                var intentUserInfoToFinish = Intent(this, SignUpFinish::class.java)
+                startActivity(intentUserInfoToFinish)
+                finish()
+                overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)
+            }
         }
 
 
@@ -36,18 +44,18 @@ class SignUpUserInfo : AppCompatActivity() {
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("회원가입")
                     .setMessage("회원가입 하시겠습니까?")
-                    .setPositiveButton("확인",
-                        DialogInterface.OnClickListener { dialog, id ->
-                            var intentUserInfoToFinish = Intent(this, SignUpFinish::class.java )
-//                intentUserInfoToFinish.putExtra("E-mail", EmailEdit.text.toString())
-//                intentUserInfoToFinish.putExtra("PhoneNumber",PhoneNumberEdit.text.toString())
-//                intentUserInfoToFinish.putExtra("Name",NameEdit.text.toString())
-//                intentUserInfoToFinish.putExtra("ID",IDEdit.text.toString())
-//                intentUserInfoToFinish.putExtra("Password",PWEdit.text.toString())
-                            startActivity(intentUserInfoToFinish)
-                            finish()
-                            overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)
-                        })
+                    .setPositiveButton("확인"
+                    ) { _, _ ->
+
+                        userViewModel.signupUser(
+                            UserData(
+
+                                IDEdit.text.toString(),
+                                NameEdit.text.toString(),
+                                PWEdit.text.toString(),
+                            )
+                        )
+                    }
                     .setNegativeButton("취소",
                         DialogInterface.OnClickListener { dialog, id ->
                         })

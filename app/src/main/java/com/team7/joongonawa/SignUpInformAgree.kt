@@ -59,6 +59,12 @@ class SignUpInformAgree : AppCompatActivity() {
                 thirdAgree.visibility = View.VISIBLE
             }
         }
+        btnBackToInformAgree.setOnClickListener {
+            var intentInformAgreeToSignIn = Intent(this, SignIn::class.java)
+            startActivity(intentInformAgreeToSignIn)
+            overridePendingTransition(R.anim.slide_down_enter, R.anim.slide_down_exit)
+            finish();
+        }
 
 
         btnGoToUserInfo.setOnClickListener {
