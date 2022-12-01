@@ -7,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 
-class CategoryAdapter(private val context : Context) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+class CategoryAdapter(private val context : Context, private val productTypeResult: ActivityResultLauncher<Intent>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
         private val categoryImg : ImageView = itemView.findViewById(R.id.categoryImage)
         private val categoryTitle : TextView = itemView.findViewById(R.id.categoryTitle)
@@ -25,7 +26,8 @@ class CategoryAdapter(private val context : Context) : RecyclerView.Adapter<Cate
                     putExtra("categoryId", category.id)
                     putExtra("categoryName", category.name)
                 }
-                intent.run{ context.startActivity(this)}
+
+                productTypeResult.launch(intent)
             })
         }
     }

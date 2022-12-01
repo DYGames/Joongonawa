@@ -9,14 +9,14 @@ import kotlinx.android.synthetic.main.activity_signup_finish.*
 
 
 
-class SignUpFinish : AppCompatActivity() {
+class SignUpFinishActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup_finish)
 
         btnGoToSignIn.setOnClickListener {
 
-            var intentFinishToSignIn = Intent(this, SignIn::class.java )
+            var intentFinishToSignIn = Intent(this, SignInActivity::class.java )
             startActivity(intentFinishToSignIn)
             overridePendingTransition(R.anim.slide_down_enter, R.anim.slide_down_exit)
             ActivityCompat.finishAffinity(this)
@@ -29,7 +29,7 @@ class SignUpFinish : AppCompatActivity() {
 
     override fun onBackPressed() {
         super.onBackPressed()
-        var intentFinishToSignIn = Intent(this, SignIn::class.java )
+        var intentFinishToSignIn = Intent(this, SignInActivity::class.java )
         startActivity(intentFinishToSignIn)
         overridePendingTransition(R.anim.slide_down_enter, R.anim.slide_down_exit)
         ActivityCompat.finishAffinity(this)

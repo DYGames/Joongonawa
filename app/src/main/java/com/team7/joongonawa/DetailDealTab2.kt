@@ -11,7 +11,7 @@ import android.widget.TableRow
 import android.widget.TextView
 
 
-class Detail_deal_tab2 : Fragment() {
+class DetailDealTab2 : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,9 +53,9 @@ class Detail_deal_tab2 : Fragment() {
         return rootView
     }
 
-    public fun newInstant() : Detail_deal_tab2 {
+    public fun newInstant() : DetailDealTab2 {
         val args = Bundle()
-        val frag = Detail_deal_tab2()
+        val frag = DetailDealTab2()
         frag.arguments = args
         return frag
     }

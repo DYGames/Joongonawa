@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -42,8 +43,6 @@ class CategoryTypeActivity : AppCompatActivity() {
                 supportFragmentManager.beginTransaction().remove(updateCategoryTypeFragment).commit()
             }
         }
-
-
 
         categoryViewModel.categoryTypeList.observe(this) {
             datas.clear()

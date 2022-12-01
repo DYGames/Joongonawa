@@ -1,9 +1,5 @@
 package com.team7.joongonawa
 
-import android.view.Gravity
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -14,10 +10,10 @@ class DetailFragmentAdapter(fm : FragmentActivity): FragmentStateAdapter(fm) {
 
         val fragment =  when(position)
         {
-            0-> Detail_deal_tab1()
-            1-> Detail_deal_tab2()
-            2-> Detail_deal_tab3()
-            else -> Detail_deal_tab1()
+            0-> DetailDealTab1()
+            1-> DetailDealTab2()
+            2-> DetailDealTab3()
+            else -> DetailDealTab1()
         }
         return fragment
     }

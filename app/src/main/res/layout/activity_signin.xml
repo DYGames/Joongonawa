@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="#ffffff"
-    tools:context=".SignIn"
+    tools:context=".SignInActivity"
     >
 
     <ImageView

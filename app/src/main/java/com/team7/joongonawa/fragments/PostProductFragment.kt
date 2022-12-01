@@ -46,7 +46,8 @@ class PostProductFragment : Fragment() {
         }
 
         productViewModel.uploadState.observe(this) {
-            Toast.makeText(activity, "업로드 성공", Toast.LENGTH_SHORT).show()
+            if (it)
+                Toast.makeText(activity, "업로드 성공", Toast.LENGTH_SHORT).show()
         }
 
         binding.postProductTitlePostButton.setOnClickListener {

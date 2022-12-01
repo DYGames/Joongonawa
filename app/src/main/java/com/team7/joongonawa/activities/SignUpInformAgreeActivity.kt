@@ -11,7 +11,7 @@ import androidx.core.view.isVisible
 import kotlinx.android.synthetic.main.activity_signup_informagree.*
 
 
-class SignUpInformAgree : AppCompatActivity() {
+class SignUpInformAgreeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup_informagree)
@@ -60,7 +60,7 @@ class SignUpInformAgree : AppCompatActivity() {
             }
         }
         btnBackToInformAgree.setOnClickListener {
-            var intentInformAgreeToSignIn = Intent(this, SignIn::class.java)
+            var intentInformAgreeToSignIn = Intent(this, SignInActivity::class.java)
             startActivity(intentInformAgreeToSignIn)
             overridePendingTransition(R.anim.slide_down_enter, R.anim.slide_down_exit)
             finish();
@@ -73,7 +73,7 @@ class SignUpInformAgree : AppCompatActivity() {
             }
             else {
 
-                var intentInformAgreeToUserInfo = Intent(this, SignUpUserInfo::class.java)
+                var intentInformAgreeToUserInfo = Intent(this, SignUpUserInfoActivity::class.java)
 //                intentInformAgreeToUserInfo.putExtra("E-mail", EmailEdit.text.toString())
 //                intentInformAgreeToUserInfo.putExtra("PhoneNumber",PhoneNumberEdit.text.toString())
 //                intentInformAgreeToUserInfo.putExtra("Name",NameEdit.text.toString())

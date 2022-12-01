@@ -1,9 +1,11 @@
 package com.team7.joongonawa
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -21,6 +23,15 @@ class CategoryActivity : AppCompatActivity() {
 
     public val categoryViewModel = CategoryViewModel(CategoryRepository.instance)
 
+    private val productTypeResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.data == null)
+                return@registerForActivityResult
+            val intent = Intent(this, ItemListActivity::class.java)
+            intent.putExtra("productType", result.data!!.getIntExtra("productType", 1))
+            setResult(1, intent)
+            finish()
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +73,7 @@ class CategoryActivity : AppCompatActivity() {
     }
 
     private fun initRecycler() {
-        categoryAdapter = CategoryAdapter(this)
+        categoryAdapter = CategoryAdapter(this, productTypeResult)
         binding.recyclerview.adapter = categoryAdapter
         binding.recyclerview.layoutManager = GridLayoutManager(this, 2)
 

@@ -4,12 +4,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import kotlinx.android.synthetic.main.activity_signup_userinfo.*
 
-class SignUpUserInfo : AppCompatActivity() {
+class SignUpUserInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +18,7 @@ class SignUpUserInfo : AppCompatActivity() {
         userViewModel.uploadState.observe(this) {
             if(it) {
                 Toast.makeText(this, "중고나와에 오신 걸 환영합니다", Toast.LENGTH_SHORT).show()
-                var intentUserInfoToFinish = Intent(this, SignUpFinish::class.java)
+                var intentUserInfoToFinish = Intent(this, SignUpFinishActivity::class.java)
                 startActivity(intentUserInfoToFinish)
                 finish()
                 overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)

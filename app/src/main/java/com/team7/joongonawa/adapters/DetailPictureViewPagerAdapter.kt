@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 
-class Detail_Picture_ViewPagerAdapter(imgList: ArrayList<Int>) :
-    RecyclerView.Adapter<Detail_Picture_ViewPagerAdapter.PagerViewHolder>() {
+class DetailPictureViewPagerAdapter(imgList: ArrayList<Int>) :
+    RecyclerView.Adapter<DetailPictureViewPagerAdapter.PagerViewHolder>() {
     var item = imgList
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = PagerViewHolder((parent))

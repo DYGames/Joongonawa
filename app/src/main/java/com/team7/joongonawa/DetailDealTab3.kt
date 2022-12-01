@@ -9,29 +9,31 @@ import android.view.ViewGroup
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
-import androidx.core.view.marginTop
 
-
-class Detail_deal_tab1 : Fragment() {
-    lateinit var binding: Detail_deal_tab1
+/**
+ * A simple [Fragment] subclass.
+ * Use the [DetailDealTab3.newInstance] factory method to
+ * create an instance of this fragment.
+ */
+class DetailDealTab3 : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var rootView = inflater.inflate(R.layout.fragment_detail_deal_tab1, container, false)
+        var rootView = inflater.inflate(R.layout.fragment_detail_deal_tab3, container, false)
 
         // 거래 내역 추가
-        val tab1_tableLayout = rootView.findViewById<TableLayout>(R.id.tab1_table)
-        var tab1_table : ArrayList<TableData> = arrayListOf(
-            TableData("XL", "49,000원", "2022/10/12"),
-            TableData("S", "58,000원", "2022/10/11"),
-            TableData("L", "59,000원", "2022/10/10"),
-            TableData("M", "47,000원", "2022/10/09"),
-            TableData("M", "51,000원", "2022/10/08"),
+        val tab3_tableLayout = rootView.findViewById<TableLayout>(R.id.tab3_table)
+        var tab3_table : ArrayList<TableData> = arrayListOf(
+            TableData("L", "47,000원", "2"),
+            TableData("XL", "49,000원", "3"),
+            TableData("S", "51,000원", "3"),
+            TableData("S", "58,000원", "1"),
+            TableData("L", "59,000원", "1"),
         )
 
-        for (data in tab1_table){
+        for (data in tab3_table){
             val tableRow = TableRow(activity)
 
             val size = TextView(activity)
@@ -49,16 +51,16 @@ class Detail_deal_tab1 : Fragment() {
             date.gravity = Gravity.END
             tableRow.addView(date)
 
-            tab1_tableLayout.addView(tableRow)
+            tab3_tableLayout.addView(tableRow)
         }
-
         return rootView
     }
 
-    fun newInstant() : Detail_deal_tab1 {
+    public fun newInstant() : DetailDealTab3 {
         val args = Bundle()
-        val frag = Detail_deal_tab1()
+        val frag = DetailDealTab3()
         frag.arguments = args
         return frag
     }
+
 }

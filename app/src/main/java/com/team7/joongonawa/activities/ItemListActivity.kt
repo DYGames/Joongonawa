@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.CheckBox
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +20,15 @@ class ItemListActivity : AppCompatActivity() {
 
     var _binding: ActivityItemListBinding? = null
     val binding get() = _binding!!
+    private val productViewModel = ProductViewModel(ProductRepository.instance)
+
+    private val productTypeResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.data == null)
+                return@registerForActivityResult
+            val r = result.data!!.getIntExtra("productType", 1)
+            productViewModel.getProductList(r)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,16 +38,17 @@ class ItemListActivity : AppCompatActivity() {
         searchview = binding.searchview
         searchview.setOnQueryTextListener(searchViewTextListener)
 
-        val productListViewModel = ProductListViewModel(ProductListRepository.instance)
-        productListViewModel.getProductList(1)
-
         rec.layoutManager = LinearLayoutManager(this)
-        recyclerAdapter = RecyclerAdapter(mutableListOf<ItemData>() as ArrayList<ItemData>, this)
+        recyclerAdapter =
+            RecyclerAdapter(mutableListOf<ProductData>() as ArrayList<ProductData>, this)
         rec.adapter = recyclerAdapter
-        productListViewModel.productList.observe(this) {
 
-            Log.d("TEST", it.size.toString())
-            recyclerAdapter.itemList = it as ArrayList<ItemData>
+        binding.itemListCategory.setOnClickListener {
+            productTypeResult.launch(Intent(this, CategoryActivity::class.java))
+        }
+
+        productViewModel.productList.observe(this) {
+            recyclerAdapter.itemList = it as ArrayList<ProductData>
             recyclerAdapter.filter.filter("")
             recyclerAdapter.notifyDataSetChanged()
         }
@@ -47,6 +58,11 @@ class ItemListActivity : AppCompatActivity() {
             startActivity(intent)
         }
         Lowcheck()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        productViewModel.getProductList(1)
     }
 
     //SearchView 텍스트 입력시 이벤트

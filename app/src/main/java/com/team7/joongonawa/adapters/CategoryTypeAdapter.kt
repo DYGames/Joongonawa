@@ -1,12 +1,14 @@
 package com.team7.joongonawa
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
@@ -19,9 +21,10 @@ class CategoryTypeAdapter(private val context : Context) : RecyclerView.Adapter<
             Glide.with(itemView).load("https://joongonawa-server-kfjur.run.goorm.io/public/"+categoryType.pic).into(categoryTypeImg)
             categoryTypeTitle.text = categoryType.name
             itemView.setOnClickListener(View.OnClickListener {
-                //val intent = Intent(context, 상품리스트액티비티::class.java)
-                //intent.putExtra("categoryId", categoryType.id)
-                //intent.run{ context.startActivity(this)}
+                val intent = Intent(context, ItemListActivity::class.java)
+                intent.putExtra("productType", categoryType.category)
+                (context as CategoryTypeActivity).setResult(1, intent)
+                (context as CategoryTypeActivity).finish()
             })
         }
     }

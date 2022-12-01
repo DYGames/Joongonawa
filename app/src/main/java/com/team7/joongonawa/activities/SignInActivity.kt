@@ -9,7 +9,7 @@ import kotlinx.android.synthetic.main.activity_signin.*
 import kotlinx.android.synthetic.main.activity_signin.IDEdit
 import kotlinx.android.synthetic.main.activity_signin.PWEdit
 
-class SignIn : AppCompatActivity() {
+class SignInActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +31,7 @@ class SignIn : AppCompatActivity() {
 
         //회원가입 버튼 클릭 시 회원가입 페이지로 이동
         btnGoToSignUpButton.setOnClickListener {
-            var intentSignInToEmailSignUp = Intent(this, SignUpInformAgree::class.java)
+            var intentSignInToEmailSignUp = Intent(this, SignUpInformAgreeActivity::class.java)
             startActivity(intentSignInToEmailSignUp)
             overridePendingTransition(R.anim.slide_up_enter, R.anim.slide_up_exit)
         }

@@ -19,7 +19,7 @@ class ProductRepository {
         return withContext(Dispatchers.IO) {
             return@withContext try {
                 val response = OkHttpClient().newCall(
-                    Request.Builder().url("http://10.0.2.2:3000/productList?type=$type").build()
+                    Request.Builder().url("https://joongonawa-server-kfjur.run.goorm.io/productList?type=$type").build()
                 ).execute()
                 Result.Success(response.body!!.string())
             } catch (e: Exception) {
@@ -34,7 +34,7 @@ class ProductRepository {
                 val timestamp = System.currentTimeMillis()
                 val filename = "${timestamp}.png"
                 val response = OkHttpClient().newCall(
-                    Request.Builder().url("http://10.0.2.2:3000/upload")
+                    Request.Builder().url("https://joongonawa-server-kfjur.run.goorm.io/upload")
                         .post(
                             MultipartBody.Builder().setType(MultipartBody.FORM)
                                 .addFormDataPart(
@@ -58,7 +58,7 @@ class ProductRepository {
         return withContext(Dispatchers.IO) {
             return@withContext try {
                 val response = OkHttpClient().newCall(
-                    Request.Builder().url("http://10.0.2.2:3000/product")
+                    Request.Builder().url("https://joongonawa-server-kfjur.run.goorm.io/product")
                         .post(
                             FormBody.Builder()
                                 .add("id", data.id.toString())
