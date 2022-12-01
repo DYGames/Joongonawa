@@ -8,7 +8,6 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_signin.*
 import kotlinx.android.synthetic.main.activity_signin.IDEdit
 import kotlinx.android.synthetic.main.activity_signin.PWEdit
-import kotlinx.android.synthetic.main.activity_signup_userinfo.*
 
 class SignIn : AppCompatActivity() {
 
@@ -21,7 +20,7 @@ class SignIn : AppCompatActivity() {
             if(it == 1) {
                 //주원이 상품페이지로 넘어가기
                 Toast.makeText(this, "로그인 성공", Toast.LENGTH_SHORT).show()
-                var intentUserInfoToFinish = Intent(this, ItemList::class.java)
+                var intentUserInfoToFinish = Intent(this, ItemListActivity::class.java)
                 startActivity(intentUserInfoToFinish)
                 finish()
                 overridePendingTransition(R.anim.slide_right_enter, R.anim.slide_right_exit)

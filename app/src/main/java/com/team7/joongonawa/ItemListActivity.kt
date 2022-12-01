@@ -6,14 +6,11 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.CheckBox
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.team7.joongonawa.databinding.ActivityItemListBinding
-import java.util.Collections
-import java.util.Comparator
 
-class ItemList : AppCompatActivity() {
+class ItemListActivity : AppCompatActivity() {
     val TAG = "itemList"
     lateinit var rec: RecyclerView
     lateinit var recyclerAdapter: RecyclerAdapter

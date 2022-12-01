@@ -33,7 +33,7 @@ class RecyclerAdapter(var itemList: ArrayList<ItemData>, var con: Context) :
             price = itemView.findViewById(R.id.txt_price)
 
             itemView.setOnClickListener {
-                AlertDialog.Builder(con).apply {
+                /*AlertDialog.Builder(con).apply {
                     var position = adapterPosition
                     var item = filteredItem[position]
                     setTitle(item.name)
@@ -42,7 +42,7 @@ class RecyclerAdapter(var itemList: ArrayList<ItemData>, var con: Context) :
                         Toast.makeText(con, "OK Button Click", Toast.LENGTH_SHORT).show()
                     })
                     show()
-                }
+                }*/
             }
         }
     }
