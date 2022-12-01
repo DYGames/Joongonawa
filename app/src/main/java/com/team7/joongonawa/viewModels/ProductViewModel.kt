@@ -17,6 +17,12 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
         }
     }
 
+    var tradeHistoryList = MutableLiveData<MutableList<TradeData>>().apply{
+        viewModelScope.launch(Main) {
+            value = mutableListOf(TradeData(0, "", "", 0, 0))
+        }
+    }
+
     var uploadState =
         MutableLiveData<Boolean>().apply { viewModelScope.launch(Main) { value = false } }
 
@@ -64,6 +70,31 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
                 }
                 else -> {
 
+                }
+            }
+        }
+    }
+
+    fun getTradeHistoryList() {
+        viewModelScope.launch {
+            when (val result = productRepository.makeTradeHistoryListRequest()) {
+                is Result.Success<String> -> {
+                    val array = JSONObject(result.data).getJSONArray("data")
+                    val list = mutableListOf<TradeData>()
+                    for (i in 0 until array.length()){
+                        val p = TradeData(
+                            array.getJSONObject(i).getInt("id"),
+                            array.getJSONObject(i).getString("size"),
+                            array.getJSONObject(i).getString("tradeDate"),
+                            array.getJSONObject(i).getInt("price"),
+                            array.getJSONObject(i).getInt("amount"),
+                        )
+                        list.add(p)
+                    }
+                    tradeHistoryList.value = list
+                }
+                else -> {
+                    tradeHistoryList.value = mutableListOf(TradeData(0, "", "", 0, 0))
                 }
             }
         }

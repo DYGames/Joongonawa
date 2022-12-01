@@ -103,6 +103,7 @@
 
 
             <Button
+                android:id="@+id/buy1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -115,6 +116,7 @@
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/buy2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -127,6 +129,7 @@
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/buy3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -139,6 +142,7 @@
                 android:textStyle="bold" />
 
             <Button
+                android:id="@+id/buy4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -157,6 +161,7 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/nextBtn"
                 android:layout_width="0dp"
                 android:layout_height="45dp"
                 android:layout_margin="10dp"

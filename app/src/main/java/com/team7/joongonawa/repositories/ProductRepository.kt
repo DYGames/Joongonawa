@@ -15,6 +15,19 @@ class ProductRepository {
         val instance = ProductRepository()
     }
 
+    suspend fun makeTradeHistoryListRequest(): Result<String> {
+        return withContext(Dispatchers.IO) {
+            return@withContext try {
+                val response = OkHttpClient().newCall(
+                    Request.Builder().url("https://joongonawa-server-kfjur.run.goorm.io/tradeHistory").build()
+                ).execute()
+                Result.Success(response.body!!.string())
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        }
+    }
+
     suspend fun makeProductListRequest(type: Int): Result<String> {
         return withContext(Dispatchers.IO) {
             return@withContext try {

@@ -30,15 +30,15 @@
             android:textSize="15dp"
             android:textStyle="normal" />
 
-        <ImageButton
-            android:id="@+id/btnBackToInformAgree"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/backarrow"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:background="@color/white"/>
+<!--        <ImageButton-->
+<!--            android:id="@+id/btnBackToInformAgree"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:srcCompat="@drawable/backarrow"-->
+<!--            android:layout_alignParentLeft="true"-->
+<!--            android:layout_centerVertical="true"-->
+<!--            android:layout_marginLeft="5dp"-->
+<!--            android:background="@color/white"/>-->
 
         <ImageView
             android:id="@+id/imageView3"

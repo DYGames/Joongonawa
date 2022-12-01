@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailDealTab1">
+    tools:context=".DetailDealTab1Fragment">
 
     <TableLayout
         android:id="@+id/tab1_table"
