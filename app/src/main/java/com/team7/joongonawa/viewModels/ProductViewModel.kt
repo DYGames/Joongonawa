@@ -17,9 +17,15 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
         }
     }
 
-    var tradeHistoryList = MutableLiveData<MutableList<TradeData>>().apply{
+    var tradeHistoryList = MutableLiveData<MutableList<TradeData>>().apply {
         viewModelScope.launch(Main) {
             value = mutableListOf(TradeData(0, "", "", 0, 0))
+        }
+    }
+
+    var product = MutableLiveData<ProductData>().apply {
+        viewModelScope.launch(Main) {
+            value = ProductData(0, "", "", "", 0, 0, 0, "")
         }
     }
 
@@ -54,6 +60,30 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
         }
     }
 
+    fun getProduct(id: Int) {
+        viewModelScope.launch {
+            when (val result = productRepository.makeProductRequest(id)) {
+                is Result.Success<String> -> {
+                    val data = JSONObject(result.data).getJSONArray("data").getJSONObject(0)
+                    val p = ProductData(
+                        data.getInt("id"),
+                        data.getString("pic"),
+                        data.getString("name"),
+                        data.getString("descr"),
+                        data.getInt("price"),
+                        data.getInt("category"),
+                        data.getInt("type"),
+                        data.getString("condi")
+                    )
+                    product.value = p
+                }
+                else -> {
+                    product.value = ProductData(0, "", "", "", 0, 0, 0, "")
+                }
+            }
+        }
+    }
+
     fun uploadProduct(img: File, data: ProductData) {
         viewModelScope.launch {
             when (val result = productRepository.makeImageUploadRequest(img)) {
@@ -81,7 +111,7 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
                 is Result.Success<String> -> {
                     val array = JSONObject(result.data).getJSONArray("data")
                     val list = mutableListOf<TradeData>()
-                    for (i in 0 until array.length()){
+                    for (i in 0 until array.length()) {
                         val p = TradeData(
                             array.getJSONObject(i).getInt("id"),
                             array.getJSONObject(i).getString("size"),

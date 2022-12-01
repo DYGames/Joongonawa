@@ -55,6 +55,7 @@ class RecyclerAdapter(var itemList: ArrayList<ProductData>, var con: Context) :
 
         holder.itemView.setOnClickListener {
             val intent = Intent(con, ItemDetailActivity::class.java)
+            Log.d("DYDYDY", item.id.toString())
             intent.putExtra("productID", item.id)
             con.startActivity(intent)
             /*AlertDialog.Builder(con).apply {

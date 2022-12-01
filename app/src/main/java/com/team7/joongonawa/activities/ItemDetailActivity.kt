@@ -21,7 +21,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.team7.joongonawa.databinding.ProductpageActivityBinding
 
 class ItemDetailActivity : AppCompatActivity() {
-    private  lateinit var binding: ProductpageActivityBinding
+    private lateinit var binding: ProductpageActivityBinding
     lateinit var sheetDialog: BottomSheetDialog
     lateinit var lineChart: LineChart
     lateinit var productViewModel: ProductViewModel
@@ -35,26 +35,18 @@ class ItemDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         productViewModel = ProductViewModel(ProductRepository.instance)
-        productViewModel.productList.observe(this) {
-
+        productViewModel.getProduct(intent.getIntExtra("productID", 0))
+        productViewModel.product.observe(this) {
+            Log.d("DYDYDY:", it.name)
             // Product data
             // 상품 브랜드, 이름, 카테고리 설정
-            binding.detailItemBrandText.text = it[0].id.toString()
-            binding.detailItemEnglishNameText.text = it[0].name
-            binding.detailItemKoreanNameText.text = it[0].category.toString()
-
-            val buyBrand = findViewById<TextView>(R.id.detail_ItemBrandText)
-            buyBrand.text = it[0].id.toString()
-
-            val buyName = findViewById<TextView>(R.id.detail_ItemEnglishNameText)
-            buyName.text = it[0].name
-
-            val buyCategory = findViewById<TextView>(R.id.detail_ItemEnglishNameText)
-            buyCategory.text = it[0].category.toString()
+            binding.detailItemBrandText.text = it.name
+            binding.detailItemEnglishNameText.text = it.descr
+            binding.detailItemKoreanNameText.text = it.condi
 
             // 가격 설정
-            binding.detailItemPrice.text = it[0].price.toString() + "원"
-            priceChange(it[0].price, 45000)
+            binding.detailItemPrice.text = "${it.price}${"원"}"
+            priceChange(it.price, 45000)
 
             // 이미지 설정
 //            val imgList = arrayListOf<Int>(Glide.with())
@@ -66,8 +58,7 @@ class ItemDetailActivity : AppCompatActivity() {
         }
 
         productViewModel.tradeHistoryList.observe(this) {
-            for (data in it){
-                Log.d("DYDYDY", data.tradeDate)
+            for (data in it) {
                 var month = data.tradeDate.split("T")[0]
                 //month.replace("-", "월")
                 //month += "일"
@@ -202,7 +193,7 @@ class ItemDetailActivity : AppCompatActivity() {
 
         // 탭 레이아웃 등록
         val tabTextList = listOf<String>("체결 거래", "판매 입찰", "구매 입찰")
-        TabLayoutMediator(binding.detailTabLayout, binding.detailPriceviewPager){tab,pos ->
+        TabLayoutMediator(binding.detailTabLayout, binding.detailPriceviewPager) { tab, pos ->
             tab.text = tabTextList[pos]
         }.attach()
 
@@ -235,7 +226,7 @@ class ItemDetailActivity : AppCompatActivity() {
 
     }
 
-    private fun createBtn(size: String, price: String) : Button{
+    private fun createBtn(size: String, price: String): Button {
         val btn = Button(this).apply {
             text = size + "\n" + price
             background = getDrawable(R.drawable.detail_sizesheet_btn)
@@ -257,16 +248,16 @@ class ItemDetailActivity : AppCompatActivity() {
         return btn
     }
 
-    fun priceChange(now:Int, prev: Int) {
+    fun priceChange(now: Int, prev: Int) {
         val text = binding.detailItemPriceChange
         val change = prev - now
-        val percent:Double = now.toDouble()/prev.toDouble()*10
+        val percent: Double = now.toDouble() / prev.toDouble() * 10
 
-        if (change > 0){
-            text.text = "▲" + change.toString() +"(+" + String.format("%.1f", percent) + "%)"
+        if (change > 0) {
+            text.text = "▲" + change.toString() + "(+" + String.format("%.1f", percent) + "%)"
             text.setTextColor(Color.parseColor("#FA5858"))
-        } else if (change < 0){
-            text.text = "▼" + change.toString() +"(-" + String.format("%.1f", percent) + "%)"
+        } else if (change < 0) {
+            text.text = "▼" + change.toString() + "(-" + String.format("%.1f", percent) + "%)"
             text.setTextColor(Color.parseColor("#00FF00"))
         } else {
             text.text = "-"
@@ -282,7 +273,10 @@ class ItemDetailActivity : AppCompatActivity() {
         chartData.add(item)
     }
 
-    private fun LineChartGraph(chartItem: ArrayList<com.team7.joongonawa.ChartData>, displayname: String){
+    private fun LineChartGraph(
+        chartItem: ArrayList<com.team7.joongonawa.ChartData>,
+        displayname: String
+    ) {
         lineChart = binding.chart
 
         val entries = ArrayList<Entry>()
@@ -319,7 +313,7 @@ class ItemDetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val id = item.itemId
         when (id) {
-            android.R.id.home-> { // 뒤로가기 버튼 눌리면
+            android.R.id.home -> { // 뒤로가기 버튼 눌리면
                 finish() // 액티비티 종료
                 return true
             }
@@ -329,7 +323,7 @@ class ItemDetailActivity : AppCompatActivity() {
     }
 
     // view pager 사진 입력
-    private fun getImgList() : ArrayList<Int> {
+    private fun getImgList(): ArrayList<Int> {
         return arrayListOf<Int>(R.drawable.detail_item_ex1, R.drawable.detail_item_ex2)
     }
 

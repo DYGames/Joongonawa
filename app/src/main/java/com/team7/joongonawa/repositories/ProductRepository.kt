@@ -15,11 +15,30 @@ class ProductRepository {
         val instance = ProductRepository()
     }
 
+    suspend fun makeProductRequest(id: Int): Result<String> {
+        return withContext(Dispatchers.IO) {
+            return@withContext try {
+                val response = OkHttpClient().newCall(
+                    Request.Builder()
+                        .url("https://joongonawa-server-kfjur.run.goorm.io/product?id=${id}")
+                        .build()
+                ).execute()
+                if (response.code == 200)
+                    Result.Success(response.body!!.string())
+                else
+                    Result.Error(Exception())
+            } catch (e: Exception) {
+                Result.Error(e)
+            }
+        }
+    }
+
     suspend fun makeTradeHistoryListRequest(): Result<String> {
         return withContext(Dispatchers.IO) {
             return@withContext try {
                 val response = OkHttpClient().newCall(
-                    Request.Builder().url("https://joongonawa-server-kfjur.run.goorm.io/tradeHistory").build()
+                    Request.Builder()
+                        .url("https://joongonawa-server-kfjur.run.goorm.io/tradeHistory").build()
                 ).execute()
                 Result.Success(response.body!!.string())
             } catch (e: Exception) {
@@ -32,7 +51,9 @@ class ProductRepository {
         return withContext(Dispatchers.IO) {
             return@withContext try {
                 val response = OkHttpClient().newCall(
-                    Request.Builder().url("https://joongonawa-server-kfjur.run.goorm.io/productList?type=$type").build()
+                    Request.Builder()
+                        .url("https://joongonawa-server-kfjur.run.goorm.io/productList?type=$type")
+                        .build()
                 ).execute()
                 Result.Success(response.body!!.string())
             } catch (e: Exception) {
