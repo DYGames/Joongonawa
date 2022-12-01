@@ -35,7 +35,7 @@ class CategoryRepository {
             return@withContext try {
                 val response = OkHttpClient().newCall(
                     Request.Builder()
-                        .url("https://joongonawa-server-kfjur.run.goorm.io/productTypeList?category=$categoryId")
+                        .url("https://joongonawa-server-kfjur.run.goorm.io/productType?category=$categoryId")
                         .build()
                 ).execute()
                 Result.Success(response.body!!.string())
@@ -85,6 +85,8 @@ class CategoryRepository {
                                 .add("name", data.name).build()
                         ).build()
                 ).execute()
+                Log.d("categoryPic", data.pic)
+
                 if (response.code == 200)
                     Result.Success(response.body!!.string())
                 else
@@ -98,7 +100,7 @@ class CategoryRepository {
         return withContext(Dispatchers.IO) {
             return@withContext try {
                 val response = OkHttpClient().newCall(
-                    Request.Builder().url("https://joongonawa-server-kfjur.run.goorm.io/productTypeList?category=$categoryId")
+                    Request.Builder().url("https://joongonawa-server-kfjur.run.goorm.io/productType?category=$categoryId")
                         .post(
                             FormBody.Builder()
                                 .add("pic", data.pic)
@@ -107,6 +109,7 @@ class CategoryRepository {
                         ).build()
                 ).execute()
                 Log.d("id", categoryId.toString())
+                Log.d("code", response.code.toString())
                 if (response.code == 200)
                     Result.Success(response.body!!.string())
                 else
