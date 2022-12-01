@@ -58,6 +58,7 @@ class CategoryActivity : AppCompatActivity() {
         super.onResume()
 
         categoryViewModel.getCategoryList()
+        Log.d("d", "d")
     }
 
     private fun initRecycler() {

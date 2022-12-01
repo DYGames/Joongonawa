@@ -16,7 +16,7 @@ class CategoryTypeAdapter(private val context : Context) : RecyclerView.Adapter<
         private val categoryTypeTitle : TextView = itemView.findViewById(R.id.categoryTypeTitle)
 
         fun bind(categoryType : CategoryTypeData) {
-            Glide.with(itemView).load(categoryType.pic).into(categoryTypeImg)
+            Glide.with(itemView).load("https://joongonawa-server-kfjur.run.goorm.io/public/"+categoryType.pic).into(categoryTypeImg)
             categoryTypeTitle.text = categoryType.name
             itemView.setOnClickListener(View.OnClickListener {
                 //val intent = Intent(context, 상품리스트액티비티::class.java)

@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
@@ -48,18 +49,23 @@ class UpdateCategoryTypeFragment : Fragment() {
         categoryViewModel.getCategoryTypeList(categoryTypeActivity.categoryId)
 
         binding.confirmCategoryTypeUpdateBtn.setOnClickListener {
-            val inputStream = context?.contentResolver?.openInputStream(currentImage!!)
-            categoryViewModel.uploadCategoryType(
-                Utils.convertInputStreamToFile(inputStream),
-                CategoryTypeData(
-                    currentImage.toString(),
-                    binding.categoryTypeNameInput.text.toString(),
+            if(binding.categoryTypeNameInput.text.isEmpty()){
+                Toast.makeText(context, "상세 카테고리 이름을 입력해주세요", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                val inputStream = context?.contentResolver?.openInputStream(currentImage!!)
+                categoryViewModel.uploadCategoryType(
+                    Utils.convertInputStreamToFile(inputStream),
+                    CategoryTypeData(
+                        currentImage.toString(),
+                        binding.categoryTypeNameInput.text.toString(),
+                        categoryTypeActivity.categoryId
+                    ),
                     categoryTypeActivity.categoryId
-                ),
-                categoryTypeActivity.categoryId
-            )
-            inputStream?.close()
-            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+                )
+                inputStream?.close()
+                activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+            }
         }
     }
     override fun onCreateView(
