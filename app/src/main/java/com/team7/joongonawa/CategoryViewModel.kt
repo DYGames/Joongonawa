@@ -91,7 +91,6 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
                     }
                 }
                 else -> {
-                    Log.d("DYDYF", result.toString())
 
                 }
             }
@@ -103,6 +102,7 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
             when (val result = categoryRepository.makeImageUploadRequest(img)) {
                 is Result.Success<String> -> {
                     data.pic = JSONObject(result.data).getString("filename")
+                    Log.d("hrhr", data.name)
                     when (val result1 =
                         categoryRepository.makeCategoryTypeUploadRequest(data, categoryId)) {
                         is Result.Success<String> -> {
@@ -114,7 +114,6 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
                     }
                 }
                 else -> {
-                    Log.d("DYDYF", result.toString())
 
                 }
             }

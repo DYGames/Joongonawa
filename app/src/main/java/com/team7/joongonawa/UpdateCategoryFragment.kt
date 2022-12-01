@@ -1,21 +1,18 @@
 package com.team7.joongonawa
 
-import android.app.Activity.RESULT_OK
-import android.app.AlertDialog
 import android.content.Context
-import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import com.team7.joongonawa.databinding.FragmentCategoryUpdateBinding
 import java.util.*
+
 
 class UpdateCategoryFragment : Fragment() {
     private var _binding: FragmentCategoryUpdateBinding? = null
@@ -48,17 +45,22 @@ class UpdateCategoryFragment : Fragment() {
         val categoryViewModel = (requireActivity() as CategoryActivity).categoryViewModel
 
         binding.confirmCategoryUpdateBtn.setOnClickListener {
-            val inputStream = context?.contentResolver?.openInputStream(currentImage!!)
-            categoryViewModel.uploadCategory(
-                Utils.convertInputStreamToFile(inputStream),
-                CategoryData(
-                    Random().nextInt(10)+10,
-                    currentImage.toString(),
-                    binding.categoryNameInput.text.toString()
+            if(binding.categoryNameInput.text.isEmpty()){
+                Toast.makeText(context, "카테고리 이름을 입력해주세요", Toast.LENGTH_SHORT).show()
+            }
+            else {
+                val inputStream = context?.contentResolver?.openInputStream(currentImage!!)
+                categoryViewModel.uploadCategory(
+                    Utils.convertInputStreamToFile(inputStream),
+                    CategoryData(
+                        0,
+                        currentImage.toString(),
+                        binding.categoryNameInput.text.toString()
+                    )
                 )
-            )
-            inputStream?.close()
-            //activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+                inputStream?.close()
+                activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
+            }
         }
     }
     override fun onCreateView(
