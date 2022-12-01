@@ -14,7 +14,11 @@
         android:theme="@style/Theme.Joongonawa"
         tools:targetApi="31">
         <activity
+<<<<<<<<< Temporary merge branch 1
+            android:name=".ItemDetailView"
+=========
             android:name=".SignIn"
+>>>>>>>>> Temporary merge branch 2
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

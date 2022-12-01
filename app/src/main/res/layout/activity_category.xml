@@ -26,8 +26,8 @@
         </androidx.recyclerview.widget.RecyclerView>
         <android.widget.Button
             android:id="@+id/add_category_btn"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="right|bottom"
             android:layout_margin="30dp"
             android:padding="10dp"
