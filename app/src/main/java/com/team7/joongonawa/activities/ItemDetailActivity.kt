@@ -18,26 +18,25 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
-import com.team7.joongonawa.databinding.ProductpageActivityBinding
+import com.team7.joongonawa.databinding.ActivityItemDetailBinding
 
 class ItemDetailActivity : AppCompatActivity() {
-    private lateinit var binding: ProductpageActivityBinding
+    private lateinit var binding: ActivityItemDetailBinding
     lateinit var sheetDialog: BottomSheetDialog
     lateinit var lineChart: LineChart
     lateinit var productViewModel: ProductViewModel
-    private val chartData = ArrayList<com.team7.joongonawa.ChartData>()
+    private val chartData = ArrayList<ChartData>()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // 뷰 바인딩
-        binding = ProductpageActivityBinding.inflate(layoutInflater)
+        binding = ActivityItemDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         productViewModel = ProductViewModel(ProductRepository.instance)
         productViewModel.getProduct(intent.getIntExtra("productID", 0))
         productViewModel.product.observe(this) {
-            Log.d("DYDYDY:", it.name)
             // Product data
             // 상품 브랜드, 이름, 카테고리 설정
             binding.detailItemBrandText.text = it.name
