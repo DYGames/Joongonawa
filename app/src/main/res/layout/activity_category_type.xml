@@ -34,8 +34,8 @@
     </LinearLayout>
     <android.widget.Button
         android:id="@+id/add_category_type_btn"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_margin="30dp"
         android:background="@drawable/shape_for_circle_button"
         android:text="+"
