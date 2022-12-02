@@ -1,11 +1,13 @@
 package com.team7.joongonawa
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
-class DetailPictureViewPagerAdapter(imgList: ArrayList<Int>) :
+class DetailPictureViewPagerAdapter(imgList: ArrayList<String>, private val context: Context) :
     RecyclerView.Adapter<DetailPictureViewPagerAdapter.PagerViewHolder>() {
     var item = imgList
 
@@ -14,7 +16,7 @@ class DetailPictureViewPagerAdapter(imgList: ArrayList<Int>) :
     override fun getItemCount(): Int = item.size
 
     override fun onBindViewHolder(holder: PagerViewHolder, position: Int) {
-        holder.img.setImageResource(item[position])
+        Glide.with(context).load("https://joongonawa-server-kfjur.run.goorm.io/public/" + item[position]).into(holder.img)
     }
 
     inner class PagerViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder

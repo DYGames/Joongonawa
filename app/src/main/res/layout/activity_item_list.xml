@@ -33,48 +33,51 @@
                     android:layout_height="wrap_content"
                     app:iconifiedByDefault="false"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@id/item_list_category"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:queryHint="검색" />
 
                 <ImageButton
                     android:id="@+id/item_list_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
                     android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@mipmap/ic_launcher"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.appcompat.widget.Toolbar>
 
-
-        <RelativeLayout
-            android:id="@+id/lowlay"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@drawable/border_2"
-            android:orientation="horizontal">
+            android:background="@drawable/border_2">
 
             <TextView
-                android:id="@+id/lowtxt"
+                android:id="@+id/item_list_category_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                android:text="가격 낮은 순"
-                android:textSize="20dp" />
+                android:layout_marginLeft="15dp"
+                android:text="가전제품 > 아이폰 14"
+                android:textSize="15sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+            </TextView>
 
-            <CheckBox
-                android:id="@+id/lowcheck"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="50dp" />
+            <Spinner
+                android:id="@+id/item_list_category_spinner"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginRight="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-        </RelativeLayout>
+            </Spinner>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec"

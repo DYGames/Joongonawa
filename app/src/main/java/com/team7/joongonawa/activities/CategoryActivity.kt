@@ -29,6 +29,9 @@ class CategoryActivity : AppCompatActivity() {
                 return@registerForActivityResult
             val intent = Intent(this, ItemListActivity::class.java)
             intent.putExtra("productType", result.data!!.getIntExtra("productType", 1))
+            intent.putExtra("productName", result.data!!.getStringExtra("productName"))
+            intent.putExtra("categoryId", result.data!!.getIntExtra("categoryId", 1))
+            intent.putExtra("categoryName", result.data!!.getStringExtra("categoryName"))
             setResult(1, intent)
             finish()
         }

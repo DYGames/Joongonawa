@@ -49,6 +49,7 @@
                 android:layout_marginTop="10dp"
                 android:elevation="20dp"
                 android:scaleType="centerInside"
+                android:background="#FAFAFA"
                 android:src="@drawable/ic_baseline_add_photo_alternate_24"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/post_product_pic_text"
@@ -114,7 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="가격"
-                    android:inputType="textPersonName"
+                    android:inputType="number"
                     android:scrollHorizontally="false" />
             </com.google.android.material.textfield.TextInputLayout>
 

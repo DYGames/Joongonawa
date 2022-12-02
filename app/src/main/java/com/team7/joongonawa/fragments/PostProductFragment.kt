@@ -47,10 +47,14 @@ class PostProductFragment : Fragment() {
 
         productViewModel.uploadState.observe(this) {
             if (it)
+            {
                 Toast.makeText(activity, "업로드 성공", Toast.LENGTH_SHORT).show()
+                requireActivity().finish()
+            }
         }
 
         binding.postProductTitlePostButton.setOnClickListener {
+            // 상품명과 일치하는게 디비에 있으면 타입값 받아오고 하는 일련의 과정을 서버에서 하면 안되나? 여기선 상품명만 넘겨주고
             val inputStream = context?.contentResolver?.openInputStream(currentImage!!)
             productViewModel.uploadProduct(
                 Utils.convertInputStreamToFile(inputStream),

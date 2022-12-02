@@ -10,6 +10,7 @@ import android.widget.GridLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
+import com.bumptech.glide.Glide
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
@@ -47,13 +48,7 @@ class ItemDetailActivity : AppCompatActivity() {
             binding.detailItemPrice.text = "${it.price}${"원"}"
             priceChange(it.price, 45000)
 
-            // 이미지 설정
-//            val imgList = arrayListOf<Int>(Glide.with())
-//            binding.detailViewpager.adapter = Detail_Picture_ViewPagerAdapter(imgList)
-
-//            val img = Glide.with()
-//            val buyImage = findViewById<ImageView>(R.id.detail_viewpager_img)
-//            buyImage.setImageResource(img)
+            binding.detailViewpager.adapter = DetailPictureViewPagerAdapter(arrayListOf(it.pic), this)
         }
 
         productViewModel.tradeHistoryList.observe(this) {
@@ -71,7 +66,7 @@ class ItemDetailActivity : AppCompatActivity() {
         // 글자 바꿔주기
 
         // 이미지 ViewPager2 적용 코드
-        binding.detailViewpager.adapter = DetailPictureViewPagerAdapter(getImgList())
+        //binding.detailViewpager.adapter = DetailPictureViewPagerAdapter(getImgList())
         binding.detailViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
         val toolbar = binding.toolbar

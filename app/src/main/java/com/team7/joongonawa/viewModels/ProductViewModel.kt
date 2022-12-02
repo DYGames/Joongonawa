@@ -29,12 +29,46 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
         }
     }
 
+    var productType = MutableLiveData<Int>().apply {
+        value = 1
+    }
+
     var uploadState =
         MutableLiveData<Boolean>().apply { viewModelScope.launch(Main) { value = false } }
 
     fun getProductList(type: Int) {
+        productType.value = type
         viewModelScope.launch {
             when (val result = productRepository.makeProductListRequest(type)) {
+                is Result.Success<String> -> {
+                    val array = JSONObject(result.data).getJSONArray("data")
+                    val list = mutableListOf<ProductData>()
+                    for (i in 0 until array.length()) {
+                        val p = ProductData(
+                            array.getJSONObject(i).getInt("id"),
+                            array.getJSONObject(i).getString("pic"),
+                            array.getJSONObject(i).getString("name"),
+                            array.getJSONObject(i).getString("descr"),
+                            array.getJSONObject(i).getInt("price"),
+                            array.getJSONObject(i).getInt("category"),
+                            array.getJSONObject(i).getInt("type"),
+                            array.getJSONObject(i).getString("condi")
+                        )
+                        list.add(p)
+                    }
+                    productList.value = list
+                }
+                else -> {
+                    productList.value = mutableListOf(ProductData(0, "", "", "", 0, 0, 0, ""))
+                }
+            }
+        }
+    }
+
+    fun getProductList() {
+        viewModelScope.launch {
+            when (val result =
+                productType.value?.let { productRepository.makeProductListRequest(it) }) {
                 is Result.Success<String> -> {
                     val array = JSONObject(result.data).getJSONArray("data")
                     val list = mutableListOf<ProductData>()

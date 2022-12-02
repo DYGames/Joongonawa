@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 
 class RecyclerAdapter(var itemList: ArrayList<ProductData>, var con: Context) :
     RecyclerView.Adapter<RecyclerAdapter.ViewHolder>(), Filterable {
@@ -49,39 +50,22 @@ class RecyclerAdapter(var itemList: ArrayList<ProductData>, var con: Context) :
 //        holder.apply {
 //            Glide.with(con).load(item.pic).into(img)
 //        }
+        Glide.with(con).load("https://joongonawa-server-kfjur.run.goorm.io/public/" + item.pic).into(holder.img)
         holder.title.text = item.name
         holder.place.text = item.descr
         holder.price.text = "${item.price}${"원"}"
 
         holder.itemView.setOnClickListener {
             val intent = Intent(con, ItemDetailActivity::class.java)
-            Log.d("DYDYDY", item.id.toString())
             intent.putExtra("productID", item.id)
             con.startActivity(intent)
-            /*AlertDialog.Builder(con).apply {
-                var position = adapterPosition
-                var item = filteredItem[position]
-                setTitle(item.name)
-                setMessage(item.price.toString())
-                setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
-                    Toast.makeText(con, "OK Button Click", Toast.LENGTH_SHORT).show()
-                })
-                show()
-            }*/
         }
-    }
-
-    fun lowcheck() {
-        var low = filteredItem.sortBy { it.price }
-        notifyDataSetChanged()
-        return low
     }
 
     override fun getItemCount(): Int {
         return filteredItem.size
     }
 
-    //-- filter
     override fun getFilter(): Filter {
         return itemFilter
     }
