@@ -21,6 +21,7 @@ class CategoryTypeActivity : AppCompatActivity() {
     private val binding get() = mBinding!!
 
     var categoryId : Int = 0
+    var categoryName = ""
 
     private lateinit var categoryTypeAdapter: CategoryTypeAdapter
     val datas = mutableListOf<CategoryTypeData>()
@@ -34,7 +35,7 @@ class CategoryTypeActivity : AppCompatActivity() {
         initRecycler()
 
         categoryId = intent.getIntExtra("categoryId", 0)
-        Log.d("categoryId", categoryId.toString())
+        categoryName = intent.getStringExtra("categoryName").toString()
 
         var updateCategoryTypeFragment = UpdateCategoryTypeFragment()
         categoryViewModel.uploadState.observe(this) {

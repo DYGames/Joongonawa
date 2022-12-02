@@ -22,8 +22,15 @@
                 android:text="상품 등록"
                 android:textSize="30sp"
                 android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="@id/post_product_title_edit"
+                app:layout_constraintLeft_toLeftOf="@id/post_product_title_layout"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/border_2"
+                app:layout_constraintBottom_toTopOf="@id/post_product_pic_text"
+                app:layout_constraintTop_toBottomOf="@id/post_product_header_text" />
 
             <TextView
                 android:id="@+id/post_product_pic_text"
@@ -31,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:text="상품 이미지 등록"
-                app:layout_constraintLeft_toLeftOf="@id/post_product_title_edit"
+                app:layout_constraintLeft_toLeftOf="@id/post_product_title_layout"
                 app:layout_constraintTop_toBottomOf="@id/post_product_header_text" />
 
             <ImageButton
@@ -41,64 +48,76 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="10dp"
                 android:elevation="20dp"
+                android:scaleType="centerInside"
+                android:background="#FAFAFA"
                 android:src="@drawable/ic_baseline_add_photo_alternate_24"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/post_product_pic_text"
                 app:layout_goneMarginTop="15dp" />
 
-            <TextView
-                android:id="@+id/post_product_title_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
-                android:text="글 제목"
-                app:layout_constraintLeft_toLeftOf="@id/post_product_title_edit"
-                app:layout_constraintTop_toBottomOf="@id/post_product_image" />
-
-            <EditText
-                android:id="@+id/post_product_title_edit"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/post_product_title_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:paddingTop="10dp"
+                android:textColorHint="#BBBBBB"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/post_product_title_text" />
+                app:layout_constraintTop_toBottomOf="@id/post_product_image">
 
-            <TextView
-                android:id="@+id/post_product_descr_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="설명"
-                app:layout_constraintLeft_toLeftOf="@id/post_product_descr_edit"
-                app:layout_constraintTop_toBottomOf="@id/post_product_title_edit" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/post_product_title_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="글 제목"
+                    android:inputType="textPersonName"
+                    android:scrollHorizontally="false" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/post_product_descr_edit"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/post_product_descr_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
+                android:paddingTop="10dp"
+                android:textColorHint="#BBBBBB"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/post_product_descr_text" />
+                app:layout_constraintTop_toBottomOf="@id/post_product_title_layout">
 
-            <TextView
-                android:id="@+id/post_product_price_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="가격"
-                app:layout_constraintLeft_toLeftOf="@id/post_product_price_edit"
-                app:layout_constraintTop_toBottomOf="@id/post_product_descr_edit" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/post_product_descr_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="설명"
+                    android:inputType="textPersonName"
+                    android:scrollHorizontally="false" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/post_product_price_edit"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/post_product_price_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
+                android:paddingTop="10dp"
+                android:textColorHint="#BBBBBB"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/post_product_price_text" />
+                app:layout_constraintTop_toBottomOf="@id/post_product_descr_layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/post_product_price_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="가격"
+                    android:inputType="number"
+                    android:scrollHorizontally="false" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/post_product_category_text"
@@ -107,7 +126,7 @@
                 android:layout_marginTop="15dp"
                 android:text="카테고리"
                 app:layout_constraintLeft_toLeftOf="@id/post_product_category_edit"
-                app:layout_constraintTop_toBottomOf="@id/post_product_price_edit" />
+                app:layout_constraintTop_toBottomOf="@id/post_product_price_layout" />
 
             <Spinner
                 android:id="@+id/post_product_category_edit"
@@ -118,41 +137,47 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/post_product_category_text" />
 
-            <TextView
-                android:id="@+id/post_product_type_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="상품 명"
-                app:layout_constraintLeft_toLeftOf="@id/post_product_type_edit"
-                app:layout_constraintTop_toBottomOf="@id/post_product_category_edit" />
-
-            <EditText
-                android:id="@+id/post_product_type_edit"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/post_product_type_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
+                android:paddingTop="10dp"
+                android:textColorHint="#BBBBBB"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/post_product_type_text" />
+                app:layout_constraintTop_toBottomOf="@id/post_product_category_edit">
 
-            <TextView
-                android:id="@+id/post_product_condi_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="상태"
-                app:layout_constraintLeft_toLeftOf="@id/post_product_condi_edit"
-                app:layout_constraintTop_toBottomOf="@id/post_product_type_edit" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/post_product_type_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="상품명"
+                    android:inputType="textPersonName"
+                    android:scrollHorizontally="false" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/post_product_condi_edit"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/post_product_condi_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="30dp"
+                android:paddingTop="10dp"
+                android:textColorHint="#BBBBBB"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/post_product_condi_text" />
+                app:layout_constraintTop_toBottomOf="@id/post_product_type_layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/post_product_condi_edit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="상태"
+                    android:inputType="textPersonName"
+                    android:scrollHorizontally="false" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/post_product_title_post_button"
@@ -163,7 +188,7 @@
                 android:text="등록"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/post_product_condi_edit" />
+                app:layout_constraintTop_toBottomOf="@id/post_product_condi_layout" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

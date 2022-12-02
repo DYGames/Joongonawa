@@ -17,11 +17,27 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
         }
     }
 
+    var tradeHistoryList = MutableLiveData<MutableList<TradeData>>().apply {
+        viewModelScope.launch(Main) {
+            value = mutableListOf(TradeData(0, "", "", 0, 0))
+        }
+    }
+
+    var product = MutableLiveData<ProductData>().apply {
+        viewModelScope.launch(Main) {
+            value = ProductData(0, "", "", "", 0, 0, 0, "")
+        }
+    }
+
+    var productType = MutableLiveData<Int>().apply {
+        value = 1
+    }
 
     var uploadState =
         MutableLiveData<Boolean>().apply { viewModelScope.launch(Main) { value = false } }
 
     fun getProductList(type: Int) {
+        productType.value = type
         viewModelScope.launch {
             when (val result = productRepository.makeProductListRequest(type)) {
                 is Result.Success<String> -> {
@@ -49,6 +65,59 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
         }
     }
 
+    fun getProductList() {
+        viewModelScope.launch {
+            when (val result =
+                productType.value?.let { productRepository.makeProductListRequest(it) }) {
+                is Result.Success<String> -> {
+                    val array = JSONObject(result.data).getJSONArray("data")
+                    val list = mutableListOf<ProductData>()
+                    for (i in 0 until array.length()) {
+                        val p = ProductData(
+                            array.getJSONObject(i).getInt("id"),
+                            array.getJSONObject(i).getString("pic"),
+                            array.getJSONObject(i).getString("name"),
+                            array.getJSONObject(i).getString("descr"),
+                            array.getJSONObject(i).getInt("price"),
+                            array.getJSONObject(i).getInt("category"),
+                            array.getJSONObject(i).getInt("type"),
+                            array.getJSONObject(i).getString("condi")
+                        )
+                        list.add(p)
+                    }
+                    productList.value = list
+                }
+                else -> {
+                    productList.value = mutableListOf(ProductData(0, "", "", "", 0, 0, 0, ""))
+                }
+            }
+        }
+    }
+
+    fun getProduct(id: Int) {
+        viewModelScope.launch {
+            when (val result = productRepository.makeProductRequest(id)) {
+                is Result.Success<String> -> {
+                    val data = JSONObject(result.data).getJSONArray("data").getJSONObject(0)
+                    val p = ProductData(
+                        data.getInt("id"),
+                        data.getString("pic"),
+                        data.getString("name"),
+                        data.getString("descr"),
+                        data.getInt("price"),
+                        data.getInt("category"),
+                        data.getInt("type"),
+                        data.getString("condi")
+                    )
+                    product.value = p
+                }
+                else -> {
+                    product.value = ProductData(0, "", "", "", 0, 0, 0, "")
+                }
+            }
+        }
+    }
+
     fun uploadProduct(img: File, data: ProductData) {
         viewModelScope.launch {
             when (val result = productRepository.makeImageUploadRequest(img)) {
@@ -65,6 +134,31 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
                 }
                 else -> {
 
+                }
+            }
+        }
+    }
+
+    fun getTradeHistoryList() {
+        viewModelScope.launch {
+            when (val result = productRepository.makeTradeHistoryListRequest()) {
+                is Result.Success<String> -> {
+                    val array = JSONObject(result.data).getJSONArray("data")
+                    val list = mutableListOf<TradeData>()
+                    for (i in 0 until array.length()) {
+                        val p = TradeData(
+                            array.getJSONObject(i).getInt("id"),
+                            array.getJSONObject(i).getString("size"),
+                            array.getJSONObject(i).getString("tradeDate"),
+                            array.getJSONObject(i).getInt("price"),
+                            array.getJSONObject(i).getInt("amount"),
+                        )
+                        list.add(p)
+                    }
+                    tradeHistoryList.value = list
+                }
+                else -> {
+                    tradeHistoryList.value = mutableListOf(TradeData(0, "", "", 0, 0))
                 }
             }
         }

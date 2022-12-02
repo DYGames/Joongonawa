@@ -4,9 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.CheckBox
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.team7.joongonawa.databinding.ActivityItemListBinding
@@ -27,6 +31,7 @@ class ItemListActivity : AppCompatActivity() {
             if (result.data == null)
                 return@registerForActivityResult
             val r = result.data!!.getIntExtra("productType", 1)
+            binding.itemListCategoryText.text = "${result.data!!.getStringExtra("categoryName")} > ${result.data!!.getStringExtra("productName")}"
             productViewModel.getProductList(r)
         }
 
@@ -43,6 +48,35 @@ class ItemListActivity : AppCompatActivity() {
             RecyclerAdapter(mutableListOf<ProductData>() as ArrayList<ProductData>, this)
         rec.adapter = recyclerAdapter
 
+        binding.itemListCategorySpinner.adapter = ArrayAdapter(
+            this,
+            com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
+            listOf("가격 낮은 순", "가격 높은 순", "상태 좋은 순", "상태 나쁜 순")
+        )
+        binding.itemListCategorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                when(position) {
+                    1 -> {
+                        recyclerAdapter.filteredItem.sortBy { it.price }
+                    }
+                    2 -> {
+                        recyclerAdapter.filteredItem.sortByDescending { it.price }
+                    }
+                    3 -> {
+                        recyclerAdapter.filteredItem.sortBy { it.condi }
+                    }
+                    4 -> {
+                        recyclerAdapter.filteredItem.sortByDescending { it.condi }
+                    }
+                }
+                recyclerAdapter.notifyDataSetChanged()
+            }
+        }
+
         binding.itemListCategory.setOnClickListener {
             productTypeResult.launch(Intent(this, CategoryActivity::class.java))
         }
@@ -57,12 +91,11 @@ class ItemListActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
-        Lowcheck()
     }
 
     override fun onResume() {
         super.onResume()
-        productViewModel.getProductList(1)
+        productViewModel.getProductList()
     }
 
     //SearchView 텍스트 입력시 이벤트
@@ -80,15 +113,4 @@ class ItemListActivity : AppCompatActivity() {
                 return false
             }
         }
-
-    fun Lowcheck() {
-        lowcheck = findViewById(R.id.lowcheck)
-        lowcheck.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                recyclerAdapter.lowcheck()
-            } else {
-            }
-        }
-    }
-
 }

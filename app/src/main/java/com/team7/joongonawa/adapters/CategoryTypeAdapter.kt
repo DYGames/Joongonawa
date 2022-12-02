@@ -23,8 +23,11 @@ class CategoryTypeAdapter(private val context : Context) : RecyclerView.Adapter<
             itemView.setOnClickListener(View.OnClickListener {
                 val intent = Intent(context, ItemListActivity::class.java)
                 intent.putExtra("productType", categoryType.category)
-                (context as CategoryTypeActivity).setResult(1, intent)
-                (context as CategoryTypeActivity).finish()
+                intent.putExtra("productName", categoryType.name)
+                intent.putExtra("categoryId", (context as CategoryTypeActivity).categoryId)
+                intent.putExtra("categoryName", context.categoryName)
+                context.setResult(1, intent)
+                context.finish()
             })
         }
     }
