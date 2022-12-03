@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -18,6 +19,9 @@ class PostProductFragment : Fragment() {
     private val binding get() = _binding!!
 
     var currentImage: Uri? = null
+
+    private var categoryIds: List<Int> = listOf()
+    private var categoryIdx = 0
 
     private val imageResult =
         registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
@@ -39,6 +43,17 @@ class PostProductFragment : Fragment() {
                 requireContext(),
                 com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
                 newList.map { it.name })
+            categoryIds = newList.map { it.id }
+        }
+
+        binding.postProductCategoryEdit.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+               categoryIdx = position
+            }
         }
 
         binding.postProductImage.setOnClickListener {
@@ -46,8 +61,7 @@ class PostProductFragment : Fragment() {
         }
 
         productViewModel.uploadState.observe(this) {
-            if (it)
-            {
+            if (it) {
                 Toast.makeText(activity, "업로드 성공", Toast.LENGTH_SHORT).show()
                 requireActivity().finish()
             }
@@ -64,10 +78,10 @@ class PostProductFragment : Fragment() {
                     binding.postProductTitleEdit.text.toString(),
                     binding.postProductDescrEdit.text.toString(),
                     binding.postProductPriceEdit.text.toString().toInt(),
-                    0,
+                    categoryIds[categoryIdx],
                     1,
                     binding.postProductCondiEdit.text.toString()
-                )
+                ), binding.postProductTypeEdit.text.toString()
             )
             inputStream?.close()
         }

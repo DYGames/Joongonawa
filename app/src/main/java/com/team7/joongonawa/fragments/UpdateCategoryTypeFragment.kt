@@ -59,7 +59,8 @@ class UpdateCategoryTypeFragment : Fragment() {
                     CategoryTypeData(
                         currentImage.toString(),
                         binding.categoryTypeNameInput.text.toString(),
-                        categoryTypeActivity.categoryId
+                        categoryTypeActivity.categoryId,
+                        0
                     ),
                     categoryTypeActivity.categoryId
                 )

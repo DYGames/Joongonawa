@@ -64,13 +64,14 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
                             array.getJSONObject(i).getString("pic"),
                             array.getJSONObject(i).getString("name"),
                             array.getJSONObject(i).getInt("category"),
+                            array.getJSONObject(i).getInt("id")
                         )
                         list.add(p)
                     }
                     categoryTypeList.value = list
                 }
                 else -> {
-                    categoryTypeList.value = mutableListOf(CategoryTypeData("", "", 0))
+                    categoryTypeList.value = mutableListOf(CategoryTypeData("", "", 0, 0))
                 }
             }
         }
