@@ -28,7 +28,7 @@
         android:fontFamily="@font/nanum_square"
         android:textColor="#2E2E2E"
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
