@@ -44,8 +44,7 @@ class ItemListActivity : AppCompatActivity() {
         searchview.setOnQueryTextListener(searchViewTextListener)
 
         rec.layoutManager = LinearLayoutManager(this)
-        recyclerAdapter =
-            RecyclerAdapter(mutableListOf<ProductData>() as ArrayList<ProductData>, this)
+        recyclerAdapter = RecyclerAdapter(mutableListOf<ProductData>() as ArrayList<ProductData>, this)
         rec.adapter = recyclerAdapter
 
         binding.itemListCategorySpinner.adapter = ArrayAdapter(

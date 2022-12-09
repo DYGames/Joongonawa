@@ -20,6 +20,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
 import com.team7.joongonawa.databinding.ActivityItemDetailBinding
+import kotlinx.android.synthetic.main.detail_buy.*
 
 class ItemDetailActivity : AppCompatActivity() {
     private lateinit var binding: ActivityItemDetailBinding
@@ -35,6 +36,9 @@ class ItemDetailActivity : AppCompatActivity() {
         binding = ActivityItemDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // 못 받아오면 디폴트 값 넣어주기
+        var now : Int  = 200000
+        var prev : Int = 100000
         productViewModel = ProductViewModel(ProductRepository.instance)
         productViewModel.getProduct(intent.getIntExtra("productID", 0))
         productViewModel.product.observe(this) {
@@ -44,24 +48,31 @@ class ItemDetailActivity : AppCompatActivity() {
             binding.detailItemEnglishNameText.text = it.descr
             binding.detailItemKoreanNameText.text = it.condi
 
+            now = it.price
+            priceChange(now, prev)
             // 가격 설정
             binding.detailItemPrice.text = "${it.price}${"원"}"
-            priceChange(it.price, 45000)
+
 
             binding.detailViewpager.adapter = DetailPictureViewPagerAdapter(arrayListOf(it.pic), this)
         }
 
         productViewModel.tradeHistoryList.observe(this) {
+            prev = it[0].price
+            priceChange(now, prev)
             for (data in it) {
                 var month = data.tradeDate.split("T")[0]
                 //month.replace("-", "월")
                 //month += "일"
 
                 addChartItem(month, data.price)
+
             }
 
             LineChartGraph(chartData, "3개월 그래프")
         }
+
+
 
         // 글자 바꿔주기
 
@@ -88,7 +99,7 @@ class ItemDetailActivity : AppCompatActivity() {
             val btnText = sizeBtn1.text.split("\n")
             val size = btnText[0]
             val price = btnText[1]
-            onClickSizeSheet(size, price)
+            onClickSizeSheet(size, price, prev)
             sheetDialog.dismiss()
         }
 
@@ -97,7 +108,7 @@ class ItemDetailActivity : AppCompatActivity() {
             val btnText = sizeBtn2.text.split("\n")
             val size = btnText[0]
             val price = btnText[1]
-            onClickSizeSheet(size, price)
+            onClickSizeSheet(size, price, prev)
             sheetDialog.dismiss()
         }
 
@@ -106,7 +117,7 @@ class ItemDetailActivity : AppCompatActivity() {
             val btnText = sizeBtn3.text.split("\n")
             val size = btnText[0]
             val price = btnText[1]
-            onClickSizeSheet(size, price)
+            onClickSizeSheet(size, price, prev)
             sheetDialog.dismiss()
         }
 
@@ -115,7 +126,7 @@ class ItemDetailActivity : AppCompatActivity() {
             val btnText = sizeBtn4.text.split("\n")
             val size = btnText[0]
             val price = btnText[1]
-            onClickSizeSheet(size, price)
+            onClickSizeSheet(size, price, prev)
             sheetDialog.dismiss()
         }
 
@@ -193,7 +204,7 @@ class ItemDetailActivity : AppCompatActivity() {
 
 
         // 변동폭 설정
-        priceChange(49000, 27000)
+        // priceChange(now = now, prev = prev)
     }
 
     override fun onResume() {
@@ -201,7 +212,7 @@ class ItemDetailActivity : AppCompatActivity() {
         productViewModel.getTradeHistoryList()
     }
 
-    private fun onClickSizeSheet(size: String, price: String) {
+    private fun onClickSizeSheet(size: String, price: String, prev: Int) {
 
         val _price = findViewById<TextView>(R.id.detail_itemPrice)
         val nprice = price.replace(",", "").replace("원", "")
@@ -214,7 +225,7 @@ class ItemDetailActivity : AppCompatActivity() {
         val _size = findViewById<Button>(R.id.detail_sizeBtn)
         _size.text = size
 
-        priceChange(nprice.toInt(), 51000)
+        priceChange(nprice.toInt(), prev)
 
         sheetDialog.dismiss()
 
@@ -233,7 +244,7 @@ class ItemDetailActivity : AppCompatActivity() {
             setOnClickListener {
                 val size = size
                 val price = price
-                onClickSizeSheet(size, price)
+                onClickSizeSheet(size, price, 10000)
                 sheetDialog.dismiss()
             }
         }
@@ -247,10 +258,10 @@ class ItemDetailActivity : AppCompatActivity() {
         val change = prev - now
         val percent: Double = now.toDouble() / prev.toDouble() * 10
 
-        if (change > 0) {
+        if (change < 0) {
             text.text = "▲" + change.toString() + "(+" + String.format("%.1f", percent) + "%)"
             text.setTextColor(Color.parseColor("#FA5858"))
-        } else if (change < 0) {
+        } else if (change > 0) {
             text.text = "▼" + change.toString() + "(-" + String.format("%.1f", percent) + "%)"
             text.setTextColor(Color.parseColor("#00FF00"))
         } else {
