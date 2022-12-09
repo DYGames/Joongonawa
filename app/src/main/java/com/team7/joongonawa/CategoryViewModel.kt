@@ -24,6 +24,7 @@ class CategoryViewModel(private val categoryRepository: CategoryRepository) : Vi
     var uploadState =
         MutableLiveData<Boolean>().apply { viewModelScope.launch(Main) { value = false } }
 
+    // 서버에서 받아온 데이터를 LiveData에 넣어준다.
     fun getCategoryList() {
         viewModelScope.launch {
             var result = categoryRepository.makeCategoryListRequest()

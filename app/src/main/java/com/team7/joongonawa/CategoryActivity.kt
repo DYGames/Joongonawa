@@ -26,8 +26,10 @@ class CategoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         mBinding = ActivityCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        // 리사이클러뷰 초기화
         initRecycler()
 
+        // 카테고리리스트에 새로운 항목이 추가되었는지 확인하는 코드
         var updateCategoryFragment = UpdateCategoryFragment()
         categoryViewModel.uploadState.observe(this) {
             if (it) {
@@ -35,6 +37,8 @@ class CategoryActivity : AppCompatActivity() {
                 supportFragmentManager.beginTransaction().remove(updateCategoryFragment).commit()
             }
         }
+
+        // categoryList LiveData가 업데이트되면 리사이클러뷰의 어댑터에 새로운 데이터로 업데이트해준다.
         categoryViewModel.categoryList.observe(this) {
             datas.clear()
 
@@ -46,6 +50,7 @@ class CategoryActivity : AppCompatActivity() {
             categoryAdapter.notifyDataSetChanged()
         }
 
+        // +버튼 클릭 시 카테고리 추가페이지(프래그먼트)로 넘어가는 코드
         binding.addCategoryBtn.setOnClickListener(View.OnClickListener {
             updateCategoryFragment = UpdateCategoryFragment()
             supportFragmentManager.beginTransaction()
@@ -54,6 +59,7 @@ class CategoryActivity : AppCompatActivity() {
         })
     }
 
+    // 프래그먼트에서 돌아올때 호출되면서 서버의 새로운 리스트로 업데이트
     override fun onResume() {
         super.onResume()
 
@@ -61,6 +67,7 @@ class CategoryActivity : AppCompatActivity() {
         Log.d("d", "d")
     }
 
+    // 리사이클러뷰 초기화
     private fun initRecycler() {
         categoryAdapter = CategoryAdapter(this)
         binding.recyclerview.adapter = categoryAdapter

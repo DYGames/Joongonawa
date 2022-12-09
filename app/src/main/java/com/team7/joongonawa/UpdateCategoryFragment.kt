@@ -22,6 +22,7 @@ class UpdateCategoryFragment : Fragment() {
     lateinit var categoryActivity : CategoryActivity
 
     var currentImage: Uri? = null
+    // 받아온 이미지 주소를 currentImage에 할당
     private val imageResult =
         registerForActivityResult(ActivityResultContracts.GetContent()) { result ->
             binding.categoryImageInput.setImageURI(result)
@@ -38,13 +39,16 @@ class UpdateCategoryFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = FragmentCategoryUpdateBinding.inflate(layoutInflater)
+        // 이미지 업로드 버튼 클릭 시 드라이브에서 파일 가져오기
         binding.uploadCategoryImageBtn.setOnClickListener {
             imageResult.launch("image/Pictures/*")
         }
 
         val categoryViewModel = (requireActivity() as CategoryActivity).categoryViewModel
 
+        // 추가하기 버튼 클릭 시 서버로 데이터 추가 요청을 한다.
         binding.confirmCategoryUpdateBtn.setOnClickListener {
+            // 이름 입력칸이 비어있을 시 toast메시지 출력
             if(binding.categoryNameInput.text.isEmpty()){
                 Toast.makeText(context, "카테고리 이름을 입력해주세요", Toast.LENGTH_SHORT).show()
             }

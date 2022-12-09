@@ -16,6 +16,7 @@ class CategoryRepository {
         val instance = CategoryRepository()
     }
 
+    // 카테고리 목록에 대한 데이터 요청
     suspend fun makeCategoryListRequest(): Result<String> {
         return withContext(Dispatchers.IO) {
             return@withContext try {
@@ -30,6 +31,7 @@ class CategoryRepository {
         }
     }
 
+    // 상세 카테고리 목록에 대한 데이터 요청
     suspend fun makeCategoryTypeListRequest(categoryId: Int): Result<String> {
         return withContext(Dispatchers.IO) {
             return@withContext try {
@@ -45,6 +47,7 @@ class CategoryRepository {
         }
     }
 
+    // 서버로 카테고리 이미지 업로드 요청
     suspend fun makeImageUploadRequest(img: File): Result<String> {
         return withContext(Dispatchers.IO) {
             return@withContext try {

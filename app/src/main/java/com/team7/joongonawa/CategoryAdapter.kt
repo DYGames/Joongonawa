@@ -16,6 +16,7 @@ class CategoryAdapter(private val context : Context) : RecyclerView.Adapter<Cate
         private val categoryImg : ImageView = itemView.findViewById(R.id.categoryImage)
         private val categoryTitle : TextView = itemView.findViewById(R.id.categoryTitle)
 
+        // 받아온 리스트 데이터와 뷰홀더의 데이터를 연동하는 작업
         fun bind(category : CategoryData) {
             Glide.with(itemView).load("https://joongonawa-server-kfjur.run.goorm.io/public/"+category.pic).into(categoryImg)
             categoryTitle.text = category.name
