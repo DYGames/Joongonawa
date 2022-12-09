@@ -40,11 +40,11 @@
 - PostMan : API 문서 공유
 
 ## URL & ERD
-✔️ ERD
-![ERD](https://github.com/DYGames/Joongonawa/blob/master/app/src/main/res/drawable/URI.png)
+✔️ URL  
+![URL](https://github.com/DYGames/Joongonawa/blob/master/app/src/main/res/drawable/URI.png){: width="400" height="500"}  
 
-✔️ ERD
-![ERD](https://github.com/DYGames/Joongonawa/blob/master/app/src/main/res/drawable/ERD.png)
+✔️ ERD  
+![ERD](https://github.com/DYGames/Joongonawa/blob/master/app/src/main/res/drawable/ERD.png){: width="500" height="500"}    
 
 ## Screen Flow Chart
 ![Time Table](https://github.com/DYGames/Joongonawa/blob/master/app/src/main/res/drawable/FlowChart.png)
