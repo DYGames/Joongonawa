@@ -46,10 +46,6 @@ class RecyclerAdapter(var itemList: ArrayList<ProductData>, var con: Context) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item: ProductData = filteredItem[position]
-        //이미지 Glide
-//        holder.apply {
-//            Glide.with(con).load(item.pic).into(img)
-//        }
         Glide.with(con).load("https://joongonawa-server-kfjur.run.goorm.io/public/" + item.pic).into(holder.img)
         holder.title.text = item.name
         holder.place.text = item.descr
