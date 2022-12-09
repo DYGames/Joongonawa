@@ -41,10 +41,10 @@
 
 ## URL & ERD
 ✔️ URL  
-<left><img src="https://github.com/DYGames/Joongonawa/blob/master/app/src/main/res/drawable/URI.png" width="400" height="500"></left>
+<left><img src="https://github.com/DYGames/Joongonawa/blob/master/app/src/main/res/drawable/URI.png" width="300" height="400"></left>
 
 ✔️ ERD  
-<left><img src="https://github.com/DYGames/Joongonawa/blob/master/app/src/main/res/drawable/ERD.png" width="500" height="500"></left>
+<left><img src="https://github.com/DYGames/Joongonawa/blob/master/app/src/main/res/drawable/ERD.png" width="600" height="300"></left>
 
 ## Screen Flow Chart
 ![Time Table](https://github.com/DYGames/Joongonawa/blob/master/app/src/main/res/drawable/FlowChart.png)
