@@ -88,7 +88,7 @@ class ProductRepository {
 
     }
 
-    suspend fun makeProductUploadRequest(data: ProductData): Result<String> {
+    suspend fun makeProductUploadRequest(data: ProductData, type: String): Result<String> {
         return withContext(Dispatchers.IO) {
             return@withContext try {
                 val response = OkHttpClient().newCall(
@@ -101,7 +101,7 @@ class ProductRepository {
                                 .add("descr", data.descr)
                                 .add("price", data.price.toString())
                                 .add("category", data.category.toString())
-                                .add("type", data.type.toString())
+                                .add("type", type)
                                 .add("condi", data.condi).build()
                         ).build()
                 ).execute()

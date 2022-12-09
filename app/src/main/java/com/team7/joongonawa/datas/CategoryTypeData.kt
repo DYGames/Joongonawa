@@ -5,4 +5,5 @@ data class CategoryTypeData (
     var pic : String,
     val name : String,
     val category : Int,
+    val id : Int,
 ) : Serializable

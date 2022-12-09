@@ -67,8 +67,9 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
 
     fun getProductList() {
         viewModelScope.launch {
+            Log.d("DYDYDY", productType.value!!.toString())
             when (val result =
-                productType.value?.let { productRepository.makeProductListRequest(it) }) {
+                 productRepository.makeProductListRequest(productType.value!!.toInt()) ) {
                 is Result.Success<String> -> {
                     val array = JSONObject(result.data).getJSONArray("data")
                     val list = mutableListOf<ProductData>()
@@ -118,12 +119,12 @@ class ProductViewModel(private val productRepository: ProductRepository) : ViewM
         }
     }
 
-    fun uploadProduct(img: File, data: ProductData) {
+    fun uploadProduct(img: File, data: ProductData, type: String) {
         viewModelScope.launch {
             when (val result = productRepository.makeImageUploadRequest(img)) {
                 is Result.Success<String> -> {
                     data.pic = JSONObject(result.data).getString("filename")
-                    when (val result1 = productRepository.makeProductUploadRequest(data)) {
+                    when (val result1 = productRepository.makeProductUploadRequest(data, type)) {
                         is Result.Success<String> -> {
                             uploadState.value = true
                         }

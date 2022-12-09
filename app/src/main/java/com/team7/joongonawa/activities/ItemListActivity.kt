@@ -44,8 +44,7 @@ class ItemListActivity : AppCompatActivity() {
         searchview.setOnQueryTextListener(searchViewTextListener)
 
         rec.layoutManager = LinearLayoutManager(this)
-        recyclerAdapter =
-            RecyclerAdapter(mutableListOf<ProductData>() as ArrayList<ProductData>, this)
+        recyclerAdapter = RecyclerAdapter(mutableListOf<ProductData>() as ArrayList<ProductData>, this)
         rec.adapter = recyclerAdapter
 
         binding.itemListCategorySpinner.adapter = ArrayAdapter(
@@ -60,16 +59,16 @@ class ItemListActivity : AppCompatActivity() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when(position) {
-                    1 -> {
+                    0 -> {
                         recyclerAdapter.filteredItem.sortBy { it.price }
                     }
-                    2 -> {
+                    1 -> {
                         recyclerAdapter.filteredItem.sortByDescending { it.price }
                     }
-                    3 -> {
+                    2 -> {
                         recyclerAdapter.filteredItem.sortBy { it.condi }
                     }
-                    4 -> {
+                    3 -> {
                         recyclerAdapter.filteredItem.sortByDescending { it.condi }
                     }
                 }

@@ -46,10 +46,6 @@ class RecyclerAdapter(var itemList: ArrayList<ProductData>, var con: Context) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item: ProductData = filteredItem[position]
-        //이미지 Glide
-//        holder.apply {
-//            Glide.with(con).load(item.pic).into(img)
-//        }
         Glide.with(con).load("https://joongonawa-server-kfjur.run.goorm.io/public/" + item.pic).into(holder.img)
         holder.title.text = item.name
         holder.place.text = item.descr
@@ -91,10 +87,10 @@ class RecyclerAdapter(var itemList: ArrayList<ProductData>, var con: Context) :
                         filteredList.add(item)
                     }
                 }
-                //그 외의 경우(공백제외 2글자 초과) -> 제목/지역으로 검색
+                //그 외의 경우(공백제외 2글자 초과) -> 제목/설명으로 검색
             } else {
                 for (item in itemList) {
-                    if (item.name.contains(filterString)) {
+                    if (item.name.contains(filterString) || item.descr.contains(filterString)) {
                         filteredList.add(item)
                     }
                 }

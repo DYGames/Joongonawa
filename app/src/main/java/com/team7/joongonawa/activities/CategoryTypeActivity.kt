@@ -49,7 +49,7 @@ class CategoryTypeActivity : AppCompatActivity() {
             datas.clear()
             for(i in 0 until it.size)
                 datas.apply {
-                    add(CategoryTypeData(it[i].pic, it[i].name, it[i].category))
+                    add(CategoryTypeData(it[i].pic, it[i].name, it[i].category, it[i].id))
                 }
             categoryTypeAdapter.datas = datas
             categoryTypeAdapter.notifyDataSetChanged()
