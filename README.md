@@ -19,10 +19,6 @@
 ✔️ 상품의 시세 추이 조회  
 ✔️ 간편한 카테고리, 상품 등록
 
-## Expectation Effectiveness
-
-동일한
-
 
 ## Tech Stack
 
