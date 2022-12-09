@@ -1,5 +1,5 @@
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fehyeok9%2FLikeLion-Ideathon&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
-![Language](https://img.shields.io/badge/laguage-Python-blue)![Language](https://img.shields.io/badge/framework-Django-orange)![Language](https://img.shields.io/badge/laguage-JavaScript-yellow)![Language](https://img.shields.io/badge/laguage-HTML-red)![Language](https://img.shields.io/badge/language-CSS-blueviolet)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FDYGames%2FJoongonawa&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
+![Language](https://img.shields.io/badge/laguage-Kotlin-blue)![Language](https://img.shields.io/badge/framework-AndroidStudio-orange)![Language](https://img.shields.io/badge/laguage-MySQL-yellow)![Language](https://img.shields.io/badge/laguage-XML-red)
 
 <h1 align="center">
   <br>
@@ -19,10 +19,6 @@
 ✔️ 상품의 시세 추이 조회  
 ✔️ 간편한 카테고리, 상품 등록
 
-## Expectation Effectiveness
-
-동일한
-
 
 ## Tech Stack
 
@@ -37,12 +33,20 @@
 - Node.js, Express.js : REST API 서버 개발
 - MySQL : Database 관리
 - Multer : 파일 관리
-- PostMan : URI 
-- 
+- PostMan : API 문서 공유
+
+## URL & ERD
+✔️ URL  
+<left><img src="https://github.com/DYGames/Joongonawa/blob/master/app/src/main/res/drawable/URI.png" width="300" height="400"></left>
+
+✔️ ERD  
+<left><img src="https://github.com/DYGames/Joongonawa/blob/master/app/src/main/res/drawable/ERD.png" width="600" height="300"></left>
+
 ## Screen Flow Chart
+![Time Table](https://github.com/DYGames/Joongonawa/blob/master/app/src/main/res/drawable/FlowChart.png)
 
 ## Demonstration Video
-
+.. 추가 예정
 
 ## Co-Work
 
@@ -59,6 +63,7 @@
 #### ✔️ Notion
 - 프로젝트 스터디 (Kotlin 문법, Android Architecture)
 - 프로젝트 일정 공유 
+![Time Table](https://github.com/DYGames/Joongonawa/blob/master/app/src/main/res/drawable/TimeTable.png)
 
 ## Contributer
 
@@ -82,5 +87,5 @@
 4. Click Run menu
 
 ## Install List
-- AndroidStudio - 20213.1  
+- AndroidStudio - 2021.3  
 - Android SDK - 31

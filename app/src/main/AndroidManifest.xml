@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -18,58 +13,81 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Joongonawa"
         tools:targetApi="31">
+<!--        <activity-->
+<!--<<<<<<<<< Temporary merge branch 1-->
+<!--            android:name=".ItemDetailView"-->
+<!--=========-->
+<!--            android:name=".SignIn"-->
+<!--&gt;>>>>>>>> Temporary merge branch 2-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+
+
+        <activity
+            android:name=".SignUpInformAgreeActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".ItemListActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".SignUpUserInfoActivity"
+            android:exported="true">
+
+        </activity>
+
         <activity
             android:name=".SignInActivity"
             android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".SignUpFinishActivity"
+            android:exported="true">
+
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
         </activity>
-        <activity
-            android:name=".SignUpInformAgreeActivity"
-            android:exported="true">
 
-        </activity>
-        <activity
-            android:name=".ItemDetailActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".ItemListActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".SignUpUserInfoActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".SignUpFinishActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
         <activity
             android:name=".CategoryActivity"
             android:exported="true">
-
         </activity>
+
         <activity
             android:name=".CategoryTypeActivity"
             android:exported="true">
-
         </activity>
+
     </application>
+    <!--갤러리 권한-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <!--갤러리 권한-->
+    <uses-permission android:name="android.permission.CAMERA"/>
 </manifest>
